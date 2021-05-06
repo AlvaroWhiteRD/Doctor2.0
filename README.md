@@ -14,6 +14,6 @@ sistema creado con las tecnologias:.
         -boostrap 4
         -jquery
 
-gracias por la visita. este proyecto esta en la rama maste. solo cambia de la rama main a la master y listo.
+gracias por la visita. este proyecto esta en la rama master. solo cambia de la rama main a la master y listo.
 
 
