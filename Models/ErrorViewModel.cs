@@ -1,6 +1,6 @@
 using System;
 
-namespace Mr_Doctor.Models
+namespace Doctor2._0.Models
 {
     public class ErrorViewModel
     {

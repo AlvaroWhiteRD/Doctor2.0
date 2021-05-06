@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mr_Doctor
+namespace Doctor2._0
 {
     public class Program
     {

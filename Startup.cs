@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MySqlConnector;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mr_Doctor
+namespace Doctor2._0
 {
     public class Startup
     {
@@ -25,10 +25,7 @@ namespace Mr_Doctor
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-           
             services.AddTransient<MySqlConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:DBConnection"]));
-
-            //se llama la cadena de conexion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,22 +48,11 @@ namespace Mr_Doctor
 
             app.UseAuthorization();
 
-            /*app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Customer}/{action=pacientes}/{id?}");
-            });*/
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute(
-                   name: "default",
-                   pattern: "{controller=Customer}/{action=Customer}/{id?}");
             });
         }
     }
