@@ -35,7 +35,7 @@ function SendId() {
 }
 
 //metodo que mueve la data al modal para que luedo se pueda editar
-function EditDoctorModal(Name, LastName, MotherLastName, Gender, CivilStatus, Dni, Phone, Address, Title) {
+function EditDoctorModal(Name, LastName, MotherLastName, Gender, CivilStatus, Dni, Phone, Address, Title, Execuatur, Epecialty) {
 
     //asociamos los textbox con sus respetivos valores provenientes de la base de datos.
     document.getElementById('name').value = Name;
@@ -46,7 +46,9 @@ function EditDoctorModal(Name, LastName, MotherLastName, Gender, CivilStatus, Dn
     dni.value = Dni;
     phone.value = Phone;
     address.value = Address;
-    document.getElementById('title').value = Title
+    document.getElementById('title').value = Title;
+    document.getElementById('execuatur').value = Execuatur;
+    document.getElementById('specialty').value = Epecialty;
    
 
 }
@@ -62,9 +64,10 @@ function SendDataUpdate() {
     formData.append("Dni", dni.value);
     formData.append("Phone", phone.value);
     formData.append("Title", document.getElementById('title').value);
+    formData.append("Execuatur", document.getElementById('execuatur').value);
+    formData.append("Specialty", document.getElementById('specialty').value);
     formData.append("Address", address.value);
     //document.getElementById('lbResultado').innerHTML = resultado;
-
     fetch('Doctor/Update', {
         method: 'POST',
         body: formData
@@ -88,8 +91,7 @@ function SendDataInsert() {
 
 
     let formData = new FormData();
-
-
+   
     formData.append("Name", document.getElementsByName('_name')[0].value);
     formData.append("LastName", document.getElementsByName('_lastName')[0].value);
     formData.append("MotherLastName", document.getElementsByName('_motherLastname')[0].value);
@@ -98,6 +100,8 @@ function SendDataInsert() {
     formData.append("Dni", document.getElementsByName('_dni')[0].value);
     formData.append("Phone", document.getElementsByName('_phone')[0].value);
     formData.append("Title", document.getElementsByName('_title')[0].value);
+    formData.append("Execuatur", document.getElementsByName('_execuatur')[0].value);
+    formData.append("Specialty", document.getElementsByName('_specialty')[0].value);
     formData.append("Address", document.getElementsByName('_address')[0].value);
 
     fetch('Doctor/Create', {

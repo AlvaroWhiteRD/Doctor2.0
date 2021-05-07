@@ -9,7 +9,7 @@ namespace Mr_Doctor.Models
     {
         private int idDoctor;
         private string name, lastName, motherLastName, dni, phone, address, civilStatus, gender;
-        private string title;
+        private string title, execuatur, specialty;
         private DateTime date;
 
         public int IdDoctor { get => idDoctor; set => idDoctor = value; }
@@ -23,8 +23,8 @@ namespace Mr_Doctor.Models
         public string Gender { get => gender; set => gender = value; }
         public string Title { get => title; set => title = value; }
         public DateTime Date { get => date; set => date = value; }
-
-
+        public string Execuatur { get => execuatur; set => execuatur = value; }
+        public string Specialty { get => specialty; set => specialty = value; }
     }
     public static partial class DoctorModel
     {
@@ -37,7 +37,7 @@ namespace Mr_Doctor.Models
             {
                 Connection = new MySqlConnection("Server=localhost;Uid=root;Password=;Database=mrdoctor;Port=3306");
                 Connection.Open();
-                string sqlInsert = "INSERT INTO doctor(name,last_name,mother_last_name,dni,phone,address,civil_status,gender,title,date) values(@name, @last_name, @mother_last_name, @dni, @phone, @address, @civil_status, @gender, @title,@date)";
+                string sqlInsert = "INSERT INTO doctor(name,last_name,mother_last_name,dni,phone,address,civil_status,gender,title,execuatur,specialty,date) values(@name, @last_name, @mother_last_name, @dni, @phone, @address, @civil_status, @gender, @title,@execuatur,@specialty,@date)";
 
                 MySqlCommand cmd = new MySqlCommand(sqlInsert, Connection);
                 //pasamos los parametros
@@ -50,6 +50,8 @@ namespace Mr_Doctor.Models
                 cmd.Parameters.AddWithValue("@civil_status", doctorModel.CivilStatus);
                 cmd.Parameters.AddWithValue("@gender", doctorModel.Gender);
                 cmd.Parameters.AddWithValue("@title", doctorModel.Title);
+                cmd.Parameters.AddWithValue("@execuatur", doctorModel.Execuatur);
+                cmd.Parameters.AddWithValue("@specialty", doctorModel.Specialty);
                 cmd.Parameters.AddWithValue("@date", doctorModel.Date);
                 myReturn = cmd.ExecuteNonQuery();
             }
@@ -111,6 +113,8 @@ namespace Mr_Doctor.Models
                     CivilStatus = readerRow.GetString("civil_status"),
                     Gender = readerRow.GetString("gender"),
                     Title = readerRow.GetString("title"),
+                    Specialty = readerRow.GetString("specialty"),
+                    Execuatur = readerRow.GetString("execuatur"),
                     Date = readerRow.GetDateTime("date"),
 
                 });
@@ -154,7 +158,7 @@ namespace Mr_Doctor.Models
                 Connection = new MySqlConnection("Server=localhost;Uid=root;Password=;Database=mrdoctor;Port=3306");
                 Connection.Open();
                 string sqlInsert = "update doctor SET name=@name,last_name=@last_name,mother_last_name=@mother_last_name," +
-                    "dni=@dni,phone=@phone,address=@address,civil_status=@civil_status,gender=@gender,title=@title where id_doctor = @id_doctor";
+                    "dni=@dni,phone=@phone,address=@address,civil_status=@civil_status,gender=@gender,title=@title,execuatur=@execuatur,specialty=@specialty where id_doctor = @id_doctor";
 
                 MySqlCommand cmd = new MySqlCommand(sqlInsert, Connection);
                 //pasamos los parametros
@@ -168,6 +172,8 @@ namespace Mr_Doctor.Models
                 cmd.Parameters.AddWithValue("@civil_status", doctorModel.CivilStatus);
                 cmd.Parameters.AddWithValue("@gender", doctorModel.Gender);
                 cmd.Parameters.AddWithValue("@title", doctorModel.Title);
+                cmd.Parameters.AddWithValue("@execuatur", doctorModel.Execuatur);
+                cmd.Parameters.AddWithValue("@specialty", doctorModel.Specialty);
                 myReturn = cmd.ExecuteNonQuery();
             }
             catch (Exception err)

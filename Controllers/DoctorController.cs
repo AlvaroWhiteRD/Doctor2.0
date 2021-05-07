@@ -25,7 +25,8 @@ namespace Doctor2.Controllers
         public IActionResult Create(DoctorModelEntyties entyties,
             string name, string gender, string lastName,
             string motherLastname, string dni, string address,
-            string phone, string civilStatus, string title)
+            string phone, string civilStatus, string title, 
+            string execuatur,string specialty)
         {
             entyties.Name = name;
             entyties.LastName = lastName;
@@ -36,6 +37,8 @@ namespace Doctor2.Controllers
             entyties.CivilStatus = civilStatus;
             entyties.Gender = gender;
             entyties.Title = title;
+            entyties.Execuatur = execuatur;
+            entyties.Specialty = specialty;
             //string dateNow= DateTime.Now.ToShortDateString("yyyy/mmmm/dddd");
             entyties.Date = DateTime.Now;
 
@@ -50,7 +53,7 @@ namespace Doctor2.Controllers
         public IActionResult Update(DoctorModelEntyties entyties,
             string name, string gender, string lastName,
             string motherLastname, string dni, string address,
-            string phone, string civilStatus, string title, int id)
+            string phone, string civilStatus, string title, string execuatur, string specialty, int id)
         {
             entyties.IdDoctor = id;
             entyties.Name = name;
@@ -62,6 +65,8 @@ namespace Doctor2.Controllers
             entyties.CivilStatus = civilStatus;
             entyties.Gender = gender;
             entyties.Title = title;
+            entyties.Execuatur = execuatur;
+            entyties.Specialty = specialty;
 
 
             int myreturn = DoctorModel.UpdateDoctor(entyties);

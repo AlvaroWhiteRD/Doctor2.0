@@ -371,3 +371,5 @@ C:\Users\Usuario\source\repos\Doctor2.0\obj\Release\net5.0\Doctor2.0.dll
 C:\Users\Usuario\source\repos\Doctor2.0\obj\Release\net5.0\ref\Doctor2.0.dll
 C:\Users\Usuario\source\repos\Doctor2.0\obj\Release\net5.0\Doctor2.0.pdb
 C:\Users\Usuario\source\repos\Doctor2.0\obj\Release\net5.0\Doctor2.0.genruntimeconfig.cache
+C:\Users\Usuario\source\repos\Doctor2.0\obj\Release\net5.0\Razor\Views\Doctor\Doctor.cshtml.g.cs
+C:\Users\Usuario\source\repos\Doctor2.0\obj\Release\net5.0\Razor\Views\Secretary\Secretary.cshtml.g.cs

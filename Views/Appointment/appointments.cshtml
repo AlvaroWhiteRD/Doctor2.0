@@ -39,74 +39,74 @@
                         @foreach (var item in ViewBag.listing)
                         {
 
-                    <tr>
+                            <tr>
 
-                        <td id="jsname">@item.Name</td>
-                        <td id="jslastName">@item.LastName</td>
-                        <td id="jsgender"> @item.Gender</td>
-                        <td id="jscivilStatus">@item.CivilStatus</td>
-                        <td id="jscivilStatus">@item.Dni</td>
-                        <td id="jsdni">@item.Phone</td>
-                        <td id="jsphone">@item.Address</td>
-                        <td id="jsname">@item.Title</td>
-                        <td>@item.Specialty</td>
-                        <td>
+                                <td id="jsname">@item.Name</td>
+                                <td id="jslastName">@item.LastName</td>
+                                <td id="jsgender"> @item.Gender</td>
+                                <td id="jscivilStatus">@item.CivilStatus</td>
+                                <td id="jscivilStatus">@item.Dni</td>
+                                <td id="jsdni">@item.Phone</td>
+                                <td id="jsphone">@item.Address</td>
+                                <td id="jsname">@item.Title</td>
+                                <td>@item.Specialty</td>
+                                <td>
 
-                            <button onclick="IdSaves(@item.IdDoctor); EditDoctorModal('@item.Name','@item.LastName','@item.MotherLastName','@item.Gender','@item.CivilStatus','@item.Dni','@item.Phone','@item.Address','@item.Title','@item.Execuatur','@item.Specialty')"
-                                    data-toggle="modal" data-target="#updateModal" class="btn btn-outline-warning">
-                                Editar
-                            </button>
-                        </td>
-                        <td>
+                                    <button onclick="IdSaves(@item.IdDoctor); EditDoctorModal('@item.Name','@item.LastName','@item.MotherLastName','@item.Gender','@item.CivilStatus','@item.Dni','@item.Phone','@item.Address','@item.Title','@item.Execuatur','@item.Specialty')"
+                                            data-toggle="modal" data-target="#updateModal" class="btn btn-outline-warning">
+                                        Editar
+                                    </button>
+                                </td>
+                                <td>
 
-                            <input type="hidden" name="idHidden" value="{@item.IdDoctor}" />
-                            <button onclick="IdSaves(@item.IdDoctor)" data-toggle="modal" data-target="#deleteModal" class="btn btn-outline-danger">
-                                Eliminar
-                            </button>
-                            <!-- Modal eliminar-->
-                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header text-center">
-                                            <h5 class="modal-title  text-red" id="exampleModalLabel">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                                Eliminando Registro
-                                            </h5>
+                                    <input type="hidden" name="idHidden" value="{@item.IdDoctor}" />
+                                    <button onclick="IdSaves(@item.IdDoctor)" data-toggle="modal" data-target="#deleteModal" class="btn btn-outline-danger">
+                                        Eliminar
+                                    </button>
+                                    <!-- Modal eliminar-->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h5 class="modal-title  text-red" id="exampleModalLabel">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        Eliminando Registro
+                                                    </h5>
 
+                                                </div>
+                                                <form onclick="stopDefAction(event);">
+
+                                                    <div class="modal-body text-center">
+                                                        <h5>
+                                                            Estas a punto de ELIMINAR este registro.
+                                                        </h5>
+                                                        <p class="text-red">Esta accion no es REVERSIBLE!!.</p>
+                                                        <p>Si estas seguro de lo que intentas realizar presiona Eliminar.</p>
+
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary  row-cols-sm-3"
+                                                                data-dismiss="modal">
+                                                            Cancelar
+                                                        </button>
+                                                        <button type="submit" class="btn btn-danger  col-sm-9" onclick="SendId()">
+                                                            Eliminar Registro
+                                                        </button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <form onclick="stopDefAction(event);">
-
-                                            <div class="modal-body text-center">
-                                                <h5>
-                                                    Estas a punto de ELIMINAR este registro.
-                                                </h5>
-                                                <p class="text-red">Esta accion no es REVERSIBLE!!.</p>
-                                                <p>Si estas seguro de lo que intentas realizar presiona Eliminar.</p>
-
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary  row-cols-sm-3"
-                                                        data-dismiss="modal">
-                                                    Cancelar
-                                                </button>
-                                                <button type="submit" class="btn btn-danger  col-sm-9" onclick="SendId()">
-                                                    Eliminar Registro
-                                                </button>
-
-                                            </div>
-                                        </form>
                                     </div>
-                                </div>
-                            </div>
 
 
-                        </td>
+                                </td>
 
 
 
 
-                    </tr>
+                            </tr>
 
                         }
                     }
@@ -202,7 +202,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        
+
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-info" type="button">Estado Civil</button>
                         </div>
@@ -442,4 +442,4 @@
 </div>
 
 
-<script src="~/js/doctor.js"></script>
+<script src="~/js/appointment.js"></script>
