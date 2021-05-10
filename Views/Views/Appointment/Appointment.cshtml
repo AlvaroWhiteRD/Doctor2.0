@@ -1,0 +1,225 @@
+<!-- Theme style -->
+<link rel="stylesheet" href="~/css/calendar/calendario.css">
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+
+        <br />
+        <div id="messageSuccess" class="text-center text-capitalize text-bold"></div>
+        <h1 class="title">Selecciona La Fecha Del Calendario Para Agregar Citas</h1>
+
+        <div class="calendar">
+            <div class="calendar__info">
+                <div class="calendar__prev" id="prev-month">&#9664;</div>
+                <div class="calendar__month" id="month"></div>
+                <div class="calendar__year" id="year"></div>
+                <div class="calendar__next" id="next-month">&#9654;</div>
+            </div>
+
+            <div class="calendar__week">
+                <div class="calendar__day calendar__item">Lunes</div>
+                <div class="calendar__day calendar__item">Martes</div>
+                <div class="calendar__day calendar__item">Miercoles</div>
+                <div class="calendar__day calendar__item">Jueves</div>
+                <div class="calendar__day calendar__item">Viernes</div>
+                <div class="calendar__day calendar__item">Sabado</div>
+                <div class="calendar__day calendar__item">Domingo</div>
+            </div>
+
+            <div class="calendar__dates" id="dates"></div>
+
+        </div>
+        <div class="content-header">
+            <div class="container-fluid">
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Agendar Cita
+                </button>
+
+            </div><!-- /.container-fluid -->
+            <br />
+            <div id="messageSuccess" class="text-center text-capitalize text-bold"></div>
+            <div class="table-responsive-sm">
+                <table class="table" id="idTable">
+                    <caption>Lista De Doctores</caption>
+                    <thead>
+
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Genero</th>
+                            <th scope="col">Estado Civil</th>
+                            <th scope="col">CEDULA</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Especialidad</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemTable">
+                        @if (ViewBag.listing != null)
+                        {
+
+
+                            @foreach (var item in ViewBag.listing)
+                            {
+
+                                <tr>
+
+                                    <td id="jsname">@item.IdDoctor</td>
+                                    <td id="jslastName">@item.IdCustomer</td>
+                                    <td id="jsgender"> @item.Description</td>
+                                    <td id="jscivilStatus">@item.TimeAppointment</td>
+                                    <td id="jscivilStatus">@item.DateAppointment</td>
+                                    <td id="jsdni">@item.State</td>
+                                    <td id="jsphone">@item.AppointmentCreated</td>
+
+                                    <td>
+
+                                        <button onclick="IdSaves(@item.IdAppointment); EditDoctorModal('@item.IdDoctor','@item.IdCustomer','@item.Description','@item.TimeAppointment','@item.DateAppointment','@item.State')"
+                                                data-toggle="modal" data-target="#updateModal" class="btn btn-outline-warning">
+                                            Editar
+                                        </button>
+                                    </td>
+                                    <td>
+
+                                        <input type="hidden" name="idHidden" value="{@item.IdDoctor}" />
+                                        <button onclick="IdSaves(@item.IdAppointment)" data-toggle="modal" data-target="#deleteModal" class="btn btn-outline-danger">
+                                            Eliminar
+                                        </button>
+                                        <!-- Modal eliminar-->
+                                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header text-center">
+                                                        <h5 class="modal-title  text-red" id="exampleModalLabel">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            Eliminando Registro
+                                                        </h5>
+
+                                                    </div>
+                                                    <form onclick="stopDefAction(event);">
+
+                                                        <div class="modal-body text-center">
+                                                            <h5>
+                                                                Estas a punto de ELIMINAR este registro.
+                                                            </h5>
+                                                            <p class="text-red">Esta accion no es REVERSIBLE!!.</p>
+                                                            <p>Si estas seguro de lo que intentas realizar presiona Eliminar.</p>
+
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary  row-cols-sm-3"
+                                                                    data-dismiss="modal">
+                                                                Cancelar
+                                                            </button>
+                                                            <button type="submit" class="btn btn-danger  col-sm-9" onclick="SendId()">
+                                                                Eliminar Registro
+                                                            </button>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+
+
+
+
+                                </tr>
+
+                            }
+                        }
+
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <!-- /.content -->
+
+    </div><!-- fin del contenedor -->
+</div>
+<!-- Modal Crear pacientes-->
+<div class="modal fade" id="selectDateModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Gestion De Citas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <input type="hidden" name="event-index">
+                    <form class="form-horizontal" onclick="stopDefAction(event);">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-info" type="button">Paciente.:</button>
+                            </div>
+                            <select class="custom-select" name="_customer">
+                                <option selected>Seleccione Aqui...</option>
+                                <option value="1">Juan</option>
+                                <option value="2">Pedro</option>
+                                <option value="3">Bartolomeo</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-info" type="button">Doctor.:</button>
+                            </div>
+                            <select class="custom-select" name="_doctor">
+                                <option selected>Seleccione Aqui...</option>
+                                <option value="1">Candido</option>
+                                <option value="2">Petruco</option>
+                                <option value="3">Percio</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">
+                                Motivo.:
+                            </label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="_description" placeholder="Ejemplo.: paciente presenta bomito y fiebre"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="min-date" class="col-sm-4 control-label">Fecha & Hora</label>
+                            <div class="col-sm-12">
+                                <div class="input-group input-daterange">
+                                    <input id="selectedDay" name="_dateAppointment" type="text" class="form-control" readonly>
+                                    <div class="input-group-prepend input-group-append">
+                                        <div class="input-group-text">Hora</div>
+                                    </div>
+                                    <input name="_timeAppointment" type="time" class="form-control">
+                                </div>
+                                <small class="text-red text-capitalize">!Para cambiar la fecha regresa a la ventana anterior</small>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
+                            <div style="padding-left:20px"></div>
+
+                            <button id="btnInsert" type="submit" class="btn btn-success col-sm-8" onclick="InsertAppointmentNew()">Registrar Doctor</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/calendar/calendario.js"></script>

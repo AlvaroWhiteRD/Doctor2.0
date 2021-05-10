@@ -1,0 +1,14 @@
+  <!-- Main Footer -->
+<footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+        Doctor 2.0
+    </div>
+    <!-- Default to the left -->
+     <div id="years"></div>
+</footer>
+<script>
+    var date = new Date();
+    var years = date.getFullYear();
+    document.getElementById('years').innerHTML = `<strong>Copyright &copy; </strong> ${years - 2} - ${years + 2} <p>Alvaro White. All rights reserved.</p>`;
+</script>
