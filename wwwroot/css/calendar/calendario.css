@@ -3,14 +3,6 @@
     box-sizing: border-box;
 }
 
-
-/*body {
-    background: -webkit-gradient(linear, left top, right top, from(mediumpurple), to(lightsalmon));
-    background: -webkit-linear-gradient(left, mediumpurple, lightsalmon);
-    background: -o-linear-gradient(left, mediumpurple, lightsalmon);
-    background: linear-gradient(to right, mediumpurple, lightsalmon);
-}*/
-
 .title {
     text-align: center;
     color: #444;
@@ -92,3 +84,7 @@
         border-radius: 50%;
         margin: auto;
     }
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
+}

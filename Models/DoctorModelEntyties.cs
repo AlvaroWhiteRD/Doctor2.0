@@ -55,7 +55,7 @@ namespace Mr_Doctor.Models
                 cmd.Parameters.AddWithValue("@date", doctorModel.Date);
                 myReturn = cmd.ExecuteNonQuery();
             }
-            catch (Exception erro)
+            catch (Exception)
             {
 
                 myReturn = -1;
@@ -140,12 +140,13 @@ namespace Mr_Doctor.Models
                 MySqlCommand cmd = new MySqlCommand(sqlDelete, Connection);
                 cmd.Parameters.AddWithValue("@id", id);
                 readerRow = cmd.ExecuteReader();
-                return myReturn = 1;
+                myReturn = 1;
             }
             catch (Exception)
             {
-                return myReturn = -1;
+               myReturn = -1;
             }
+            return myReturn;
 
         }
 
@@ -176,7 +177,7 @@ namespace Mr_Doctor.Models
                 cmd.Parameters.AddWithValue("@specialty", doctorModel.Specialty);
                 myReturn = cmd.ExecuteNonQuery();
             }
-            catch (Exception err)
+            catch (Exception)
             {
                 myReturn = -1;
             }

@@ -2,8 +2,13 @@
 <footer class="main-footer">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
-        Anything you want
+        Doctor 2.0
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+     <div id="years"></div>
 </footer>
+<script>
+    var date = new Date();
+    var years = date.getFullYear();
+    document.getElementById('years').innerHTML = `<strong>Copyright &copy; </strong> ${years - 2} - ${years + 2} <p>Alvaro White. All rights reserved.</p>`;
+</script>

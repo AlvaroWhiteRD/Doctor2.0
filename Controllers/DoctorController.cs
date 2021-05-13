@@ -1,4 +1,6 @@
 
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mr_Doctor.Models;
 using System;
@@ -7,17 +9,29 @@ using System.Text.Encodings.Web;
 
 namespace Doctor2.Controllers
 {
+    
     public class DoctorController : Controller
     {
         // 
         // GET: traemos todos los registros
+        //[Authorize]
         [HttpGet]
         public IActionResult Index()
         {
-
-            ViewBag.listing = DoctorModel.ShowDoctor();
-
-            return View("../Doctor/Doctor");
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("User")))
+            {
+                ViewBag.listing = DoctorModel.ShowDoctor();
+                ViewBag.User = HttpContext.Session.GetString("User");
+                ViewBag.User = HttpContext.Session.GetString("User");
+                //return View("../Doctor/Doctor");
+                //return RedirectToAction("Index", "Doctor");
+                return View();
+            }
+            else {
+                ViewBag.Error = HttpContext.Session.GetString("User");
+                return View("../Login/Login");
+            }
+            
         }
 
         // CustomerModelEntyties entyties
