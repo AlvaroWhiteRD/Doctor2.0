@@ -24,12 +24,35 @@ namespace Mr_Doctor.Models
         public static List<LoginModelEntyties> Login(LoginModelEntyties user)
         {
             //string sql = "Select * FROM login where user_name='" + user.UserName + "' and password='"+user.Password+"'";
-            string sql = "Select * FROM login where user_name=?userName? and password=?password?";
+            string sql = "Select * FROM login where user_name=@userName and password=@password";
 
             using (MySqlConnection connection = new MySqlConnection("Server=localhost;Uid=root;Password=;Database=mrdoctor;Port=3306"))
-                {
-                return connection.Query<LoginModelEntyties>(sql, new { userName = user.UserName, password=user.Password }).ToList();
+            {
+                //var login =  connection.Query<LoginModelEntyties>(sql, new { userName = user.UserName, password=user.Password }).ToList();
+                MySqlCommand login = new MySqlCommand(sql, connection);
+                login.Parameters.AddWithValue("@userName", user.UserName);
+                login.Parameters.AddWithValue("@password", user.Password);
 
+                connection.Open();
+                MySqlDataReader reader = login.ExecuteReader();
+                // siempre retorana solo una fila
+
+                LoginModelEntyties obj = new LoginModelEntyties();
+                reader.Read();
+
+                //if (reader.HasRows)
+                //{
+                    if (reader != null)
+                    {
+                        obj.IdRol = Convert.ToInt32(reader["id_rol"]);
+                        obj.UserName = Convert.ToString(reader["user_name"]);
+                    }
+                //}
+                List<LoginModelEntyties> list = new List<LoginModelEntyties>();
+
+                list.Add(obj);
+
+                return list;
                 // return connection.Query<LoginModelEntyties>("Select * FROM login where user_name='" + user.UserName + 
                 //"and password=" + user.Password + "'").ToList();
                 //new { userName = user.UserName });

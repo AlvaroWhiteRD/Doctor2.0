@@ -25,29 +25,32 @@ namespace Doctor2.Controllers
             //List<LoginModelEntyties> login = LoginModel.Login(user);
             List<LoginModelEntyties> login = LoginModel.Login(user);
 
+            //si la session existe no se deja pasar al login
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("User")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
 
             if (login.Count < 1)
             {
                 ViewBag.Error = "Error: usuario o contraseña incorrecto";
                 return View();
             }
+            ViewBag.SessionUser = "";
             if (login.Count > 0)
             {
-                HttpContext.Session.SetString("User", user.UserName);
-                HttpContext.Session.SetInt32("IdRol", user.IdRol);
+                foreach (var item in login)
+                {
+                    //si el usuario y contraseña coinciden se crea la session
+                    HttpContext.Session.SetString("User", item.UserName);
+                    HttpContext.Session.SetInt32("IdRol", item.IdRol);
+
+                }
+                //se llama la session
                 ViewBag.SessionUser = HttpContext.Session.GetString("User");
                 ViewBag.SessionRol = HttpContext.Session.GetInt32("IdRol");
             }
-
-
-            // Requires: using Microsoft.AspNetCore.Http;
-            /*if (string.IsNullOrEmpty(HttpContext.Session.GetString("user")))
-            {
-
-            }*/
-
-
-
             return RedirectToAction("Index", "Home");
 
 
