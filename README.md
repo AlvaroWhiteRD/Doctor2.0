@@ -4,8 +4,8 @@ modulos:.
         -registros de pacientes(completo)
         -registros de secretarias(completo)
         -registros de doctores(completo)
-        -login con varios roles(Aun le faltan algunos ajustes)
-        -creacion de citas medicas(en proceso)
+        -login con varios roles(completos)
+        -creacion de citas medicas(completo)
 
 sistema aun esta en procceso de terminacion.
 sistema creado con las tecnologias:. 
