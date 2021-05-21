@@ -1,0 +1,74 @@
+
+@model Mr_Doctor.Models.LoginModelEntyties
+
+@{ Layout = null; }
+
+
+
+<div class="main">
+    <p class="sign" align="center">Acceso De Usuarios</p>
+    <form class="form1" asp-action="Login" method="post">
+
+        @if (ViewBag.ErrorUser != null)
+        {<div class="text-erro" align="center">@ViewBag.ErrorUser</div>}
+        <div class="erro-user" id="erro-user" align="center"></div>
+        <input class="un" asp-for="UserName" id="userName" align="center" placeholder="Correo electronico">
+       
+        @if (ViewBag.ErrorPass != null)
+        {<div class="text-erro" align="center">@ViewBag.ErrorPass</div>}
+        <input class="pass" asp-for="Password" type="password" id="password" align="center" placeholder="Password">
+        
+        <button type="submit" class="submit" align="center">Entrar</button>
+        @if (ViewBag.Error != null)
+        {<div class="text-erro" align="center">@ViewBag.Error</div>}
+        <div class="contact" align="center">&#191; No tienes cuenta ? </div>
+        <p class="contact" align="center">&#161; Llamanos al (809)123-4567 para crearte una ! </p>
+    </form>
+
+</div>
+<link rel="stylesheet" href="~/css/login.css">
+<script>
+
+   /* function stopDefAction(evt) {
+        evt.preventDefault();
+    }
+
+    function formValidate() {
+
+        userName = document.getElementById("userName").value;
+        password = document.getElementById("password").value;
+
+        if (userName == "" || userName == null || userName.trim() == "") {
+            document.getElementById("userName").className = "un erro-user";
+            return;
+        }
+        document.getElementById("userName").className = "un sucess-user";
+        if (password == "" || password == null || password.trim() == "" ) {
+            document.getElementById("password").className = "pass erro-pass";
+            return;
+        }
+        document.getElementById("password").className = "un sucess-pass";
+
+        let formData = new FormData();
+
+        formData.append("userName", document.getElementById("userName").value);
+        formData.append("userSelect", document.getElementById("password").value);
+
+        fetch('Login/Login', {
+            method: 'POST',
+            body: formData
+        })
+    }
+    function LoginSendValidate() {
+
+        let formData = new FormData();
+
+        formData.append("userName", document.getElementById("userName").value);
+        formData.append("password", document.getElementById("password").value);
+        
+        fetch('Login/Login', {
+            method: 'POST',
+            body: formData
+        })
+    }*/
+</script>

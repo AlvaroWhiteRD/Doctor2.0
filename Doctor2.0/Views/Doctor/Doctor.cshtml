@@ -1,0 +1,484 @@
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Registrar Doctor
+            </button>
+
+        </div><!-- /.container-fluid -->
+        <br />
+        <div id="messageSuccess" class="text-center text-capitalize text-bold"></div>
+        <div class="table-responsive-sm">
+            <table class="table" id="idTable">
+                <caption>Lista De Doctores</caption>
+                <thead>
+
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Estado Civil</th>
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Direccion</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Especialidad</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody id="itemTable">
+                    @if (ViewBag.listing != null)
+                    {
+
+
+                        @foreach (var item in ViewBag.listing)
+                        {
+
+                            <tr>
+
+                                <td id="jsname">@item.Name</td>
+                                <td id="jslastName">@item.LastName</td>
+                                <td id="jscivilStatus">@item.CivilStatus</td>
+                                <td id="jscivilStatus">@item.Dni</td>
+                                <td id="jsdni">@item.Phone</td>
+                                <td id="jsphone">@item.Address</td>
+                                <td id="jsname">@item.Title</td>
+                                <td>@item.Specialty</td>
+                                <td>
+
+                                    <button onclick="IdSaves(@item.IdDoctor); EditDoctorModal('@item.Name','@item.LastName','@item.MotherLastName','@item.Gender','@item.CivilStatus','@item.Dni','@item.Phone','@item.Address','@item.Title','@item.Execuatur','@item.Specialty')"
+                                            data-toggle="modal" data-target="#updateModal" class="btn btn-outline-warning">
+                                        Editar
+                                    </button>
+                                </td>
+                                <td>
+
+                                    <input type="hidden" name="idHidden" value="{@item.IdDoctor}" />
+                                    <button onclick="IdSaves(@item.IdDoctor)" data-toggle="modal" data-target="#deleteModal" class="btn btn-outline-danger">
+                                        Eliminar
+                                    </button>
+                                    <!-- Modal eliminar-->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h5 class="modal-title  text-red" id="exampleModalLabel">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        Eliminando Registro
+                                                    </h5>
+
+                                                </div>
+                                                <form>
+
+                                                    <div class="modal-body text-center">
+                                                        <h5>
+                                                            Estas a punto de ELIMINAR este registro.
+                                                        </h5>
+                                                        <p class="text-red">Esta accion no es REVERSIBLE!!.</p>
+                                                        <p>Si estas seguro de lo que intentas realizar presiona Eliminar.</p>
+
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary  row-cols-sm-3"
+                                                                data-dismiss="modal">
+                                                            Cancelar
+                                                        </button>
+                                                        <button type="submit" class="btn btn-danger  col-sm-9" onclick="stopDefAction(event);SendId()">
+                                                            Eliminar Registro
+                                                        </button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </td>
+
+
+
+
+                            </tr>
+
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <!-- /.content -->
+</div><!-- fin del contenedor -->
+<!-- Modal Crear nuevo cliente-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registro De Nuevos Doctores</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form onclick="stopDefAction(event);">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Nombre.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_name" placeholder="Nombre">
+                            <small id="errorName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Apellido.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_lastName" placeholder="Apellido Paterno">
+                            <small id="errorLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Apellido.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_motherLastname" placeholder="Apellido Materno">
+                            <small id="errorMotherLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Cedula.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="_dni" placeholder="Numero De Cedula">
+                            <small id="errorDni" class="text-red"></small>
+                            <small id="errorOnlyNumber" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Direccion.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="_address" placeholder="Direccion">
+                            <small id="errorAddress" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Telefono.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="_phone" placeholder="Telefono">
+                            <small id="errorPhone" class="text-red"></small>
+                            <small id="errorOnlyNumberPhone" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Titulo.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_title" placeholder="Titulo Del Doctor">
+                            <small id="errorTitle" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Execuatur.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="_execuatur" placeholder="Execuatur">
+                            <small id="errorExecuatur" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Estado Civil</button>
+                        </div>
+                        <select class="custom-select" name="_civilStatus">
+                            <option value="0" selected>Seleccione Aqui...</option>
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Union Libre">Union Libre</option>
+                        </select>
+                    </div>
+                    <small id="errorCivilStatus" class="text-red"></small>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Genero</button>
+                        </div>
+                        <select class="custom-select" name="_gender">
+                            <option selected value="0">Seleccione Aqui...</option>
+                            <option value="Hombre">Hombre</option>
+                            <option value="Mujer">Mujer</option>
+                            <option value="No Sabe">No Sabe</option>
+                        </select>
+                    </div>
+                    <small id="errorGender" class="text-red"></small>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Especialidad</button>
+                        </div>
+                        <select class="custom-select" name="_specialty">
+                            <option value="0" selected="">Seleccione Aqui...</option>
+                            <option value="Alerg&oacute;logo">Alerg&oacute;logo</option>
+                            <option value="Anestesi&oacute;logo">Anestesi&oacute;logo</option>
+                            <option value="Angi&oacute;logo">Angi&oacute;logo</option>
+                            <option value="Audi&oacute;logo Cl&iacute;nico">Audi&oacute;logo Cl&iacute;nico</option>
+                            <option value="Cardi&oacute;logo">Cardi&oacute;logo</option>
+                            <option value="Cirujano">Cirujano</option>
+                            <option value="Cirujano Bari&aacute;trico">Cirujano Bari&aacute;trico</option>
+                            <option value="Cirujano Cardiovascular">Cirujano Cardiovascular</option>
+                            <option value="Cirujano Craneofacial">Cirujano Craneofacial</option>
+                            <option value="Cirujano de Mano">Cirujano de Mano</option>
+                            <option value="Cirujano Est&eacute;tico">Cirujano Est&eacute;tico</option>
+                            <option value="Cirujano General">Cirujano General</option>
+                            <option value="Cirujano Hepatobiliopancreatico">Cirujano Hepatobiliopancreatico</option>
+                            <option value="Cirujano Laparosc&oacute;pico">Cirujano Laparosc&oacute;pico</option>
+                            <option value="Cirujano Maxilofacial">Cirujano Maxilofacial</option>
+                            <option value="Cirujano Oftalm&oacute;logo">Cirujano Oftalm&oacute;logo</option>
+                            <option value="Cirujano Onc&oacute;logo">Cirujano Onc&oacute;logo</option>
+                            <option value="Cirujano Pedi&aacute;trico">Cirujano Pedi&aacute;trico</option>
+                            <option value="Cirujano Pl&aacute;stico">Cirujano Pl&aacute;stico</option>
+                            <option value="Cirujano Vascular">Cirujano Vascular</option>
+                            <option value="Cit&oacute;logo">Cit&oacute;logo</option>
+                            <option value="Cosmeatr&iacute;a">Cosmeatr&iacute;a</option>
+                            <option value="Dermat&oacute;logo">Dermat&oacute;logo</option>
+                            <option value="Diabet&oacute;logo">Diabet&oacute;logo</option>
+                            <option value="Emergencista">Emergencista</option>
+                            <option value="Endocrin&oacute;logo">Endocrin&oacute;logo</option>
+                            <option value="Endodoncista">Endodoncista</option>
+                            <option value="Endoscopista">Endoscopista</option>
+                            <option value="Epidemi&oacute;logo">Epidemi&oacute;logo</option>
+                            <option value="Estomat&oacute;logo">Estomat&oacute;logo</option>
+                            <option value="Fisiatra">Fisiatra</option>
+                            <option value="Gastroenter&oacute;logo">Gastroenter&oacute;logo</option>
+                            <option value="Geriatra">Geriatra</option>
+                            <option value="Geront&oacute;logo">Geront&oacute;logo</option>
+                            <option value="Ginec&oacute;logo">Ginec&oacute;logo</option>
+                            <option value="Ginec&oacute;logo y Fertilidad">Ginec&oacute;logo y Fertilidad</option>
+                        </select>
+                    </div>
+                    <small id="errorSpecialty" class="text-red"></small>
+
+
+                    <div class="form-group row">
+                        <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
+                        <div style="padding-left:20px"></div>
+
+                        <button id="btnInsert" type="submit" onclick="ValidateForm()" class="btn btn-success col-sm-8">Registrar Doctor</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal actualizar cliente-->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Actualizar Informacion De Los Doctores</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form onclick="stopDefAction(event);">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Nombre.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onpaste="return false" onkeypress="return OnlyLetters(event)" yyyyyyyyyy class="form-control" name="name" id="name" placeholder="Nombre">
+                            <small id="errorName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
+                        </div>
+                        <span id="errorName" class="text-red"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Apellido.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onpaste="return false" onkeypress="return OnlyLetters(event)" class="form-control" name="lastName" id="lastName" placeholder="Apellido Paterno">
+                            <small id="errorLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Apellido.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onpaste="return false" onkeypress="return OnlyLetters(event)" class="form-control" name="motherLastname" id="motherLastname" placeholder="Apellido Materno">
+                            <small id="errorMotherLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Cedula.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="dni" id="dni" placeholder="Numero De Cedula">
+                            <small id="errorDni" class="text-red"></small>
+                            <small id="errorOnlyNumber" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Direccion.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="address" id="address" placeholder="Direccion">
+                            <small id="errorAddress" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Telefono.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="phone" id="phone" placeholder="Telefono">
+                            <small id="errorPhone" class="text-red"></small>
+                            <small id="errorOnlyNumberPhone" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Titulo.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onpaste="return false" onkeypress="return OnlyLetters(event)" class="form-control" name="title" id="title" placeholder="Titulo Del Doctor">
+                            <small id="errorTitle" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Execuatur.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="execuatur" id="execuatur" placeholder="Execuatur">
+                            <small id="errorExecuatur" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Estado Civil</button>
+                        </div>
+                        <select class="custom-select" name="civilStatus" id="civilStatus">
+                            <option selected>Seleccione Aqui...</option>
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Union Libre">Union Libre</option>
+                        </select>
+                    </div>
+                    <small id="errorCivilStatus" class="text-red"></small>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Genero</button>
+                        </div>
+                        <select class="custom-select" name="gender" id="gender">
+                            <option selected>Seleccione Aqui...</option>
+                            <option value="Hombre">Hombre</option>
+                            <option value="Mujer">Mujer</option>
+                            <option value="No Sabe">No Sabe</option>
+                        </select>
+                    </div>
+                    <small id="errorGender" class="text-red"></small>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Especialidad</button>
+                        </div>
+                        <select class="custom-select" name="specialty" id="specialty">
+                            <option value="" selected>Seleccione Aqui...</option>
+                            <option value="Alerg&oacute;logo">Alerg&oacute;logo</option>
+                            <option value="Anestesi&oacute;logo">Anestesi&oacute;logo</option>
+                            <option value="Angi&oacute;logo">Angi&oacute;logo</option>
+                            <option value="Audi&oacute;logo Cl&iacute;nico">Audi&oacute;logo Cl&iacute;nico</option>
+                            <option value="Cardi&oacute;logo">Cardi&oacute;logo</option>
+                            <option value="Cirujano">Cirujano</option>
+                            <option value="Cirujano Bari&aacute;trico">Cirujano Bari&aacute;trico</option>
+                            <option value="Cirujano Cardiovascular">Cirujano Cardiovascular</option>
+                            <option value="Cirujano Craneofacial">Cirujano Craneofacial</option>
+                            <option value="Cirujano de Mano">Cirujano de Mano</option>
+                            <option value="Cirujano Est&eacute;tico">Cirujano Est&eacute;tico</option>
+                            <option value="Cirujano General">Cirujano General</option>
+                            <option value="Cirujano Hepatobiliopancreatico">Cirujano Hepatobiliopancreatico</option>
+                            <option value="Cirujano Laparosc&oacute;pico">Cirujano Laparosc&oacute;pico</option>
+                            <option value="Cirujano Maxilofacial">Cirujano Maxilofacial</option>
+                            <option value="Cirujano Oftalm&oacute;logo">Cirujano Oftalm&oacute;logo</option>
+                            <option value="Cirujano Onc&oacute;logo">Cirujano Onc&oacute;logo</option>
+                            <option value="Cirujano Pedi&aacute;trico">Cirujano Pedi&aacute;trico</option>
+                            <option value="Cirujano Pl&aacute;stico">Cirujano Pl&aacute;stico</option>
+                            <option value="Cirujano Vascular">Cirujano Vascular</option>
+                            <option value="Cit&oacute;logo">Cit&oacute;logo</option>
+                            <option value="Cosmeatr&iacute;a">Cosmeatr&iacute;a</option>
+                            <option value="Dermat&oacute;logo">Dermat&oacute;logo</option>
+                            <option value="Diabet&oacute;logo">Diabet&oacute;logo</option>
+                            <option value="Emergencista">Emergencista</option>
+                            <option value="Endocrin&oacute;logo">Endocrin&oacute;logo</option>
+                            <option value="Endodoncista">Endodoncista</option>
+                            <option value="Endoscopista">Endoscopista</option>
+                            <option value="Epidemi&oacute;logo">Epidemi&oacute;logo</option>
+                            <option value="Estomat&oacute;logo">Estomat&oacute;logo</option>
+                            <option value="Fisiatra">Fisiatra</option>
+                            <option value="Gastroenter&oacute;logo">Gastroenter&oacute;logo</option>
+                            <option value="Geriatra">Geriatra</option>
+                            <option value="Geront&oacute;logo">Geront&oacute;logo</option>
+                            <option value="Ginec&oacute;logo">Ginec&oacute;logo</option>
+                            <option value="Ginec&oacute;logo y Fertilidad">Ginec&oacute;logo y Fertilidad</option>
+                        </select>
+                    </div>
+                    <small id="errorSpecialty" class="text-red"></small>
+                    <div class="form-group row">
+                        <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
+                        <div style="padding-left:20px"></div>
+
+                        <button type="submit" class="btn btn-success col-sm-8" onclick="SendDataUpdate()">Actualizar Doctor</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    .sucess-input {
+        border-color: green;
+    }
+
+    .erro-input {
+        border-color: red;
+    }
+</style>
+
+<script src="~/js/doctor.js"></script>
