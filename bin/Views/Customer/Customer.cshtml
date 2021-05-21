@@ -142,31 +142,35 @@
             </div>
             <div class="modal-body">
 
-                <form onclick="stopDefAction(event);" >
+                <form onclick="stopDefAction(event);">
                     <div class="form-group row">
                         <label for="" class="col-sm-2 col-form-label">
                             Nombre.:
                         </label>
                         <div class="col-sm-10">
-                            <input onkeypress="ValidateName()" required class="form-control" name="_name" placeholder="Nombre" >
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_name" placeholder="Nombre">
+                            <small id="errorName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
-                        <span id="errorName" class="text-red"></span>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-sm-2 col-form-label">
                             Apellido.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_lastName" placeholder="Apellido Paterno">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_lastName" placeholder="Apellido Paterno">
+                            <small id="errorLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-sm-2 col-form-label">
-
                             Apellido.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_motherLastname" placeholder="Apellido Materno">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_motherLastname" placeholder="Apellido Materno">
+                            <small id="errorMotherLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -174,7 +178,9 @@
                             Cedula.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_dni" placeholder="Numero De Cedula">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="_dni" placeholder="Numero De Cedula">
+                            <small id="errorDni" class="text-red"></small>
+                            <small id="errorOnlyNumber" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -183,6 +189,7 @@
                         </label>
                         <div class="col-sm-10">
                             <input class="form-control" name="_address" placeholder="Direccion">
+                            <small id="errorAddress" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -190,7 +197,9 @@
                             Telefono.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_phone" placeholder="Telefono">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="_phone" placeholder="Telefono">
+                            <small id="errorPhone" class="text-red"></small>
+                            <small id="errorOnlyNumberPhone" class="text-red"></small>
                         </div>
                     </div>
                     <div class="input-group mb-3">
@@ -198,27 +207,30 @@
                             <button class="btn btn-outline-info" type="button">Estado Civil</button>
                         </div>
                         <select class="custom-select" name="_civilStatus">
-                            <option selected>Seleccione Aqui...</option>
+                            <option selected value="0">Seleccione Aqui...</option>
                             <option value="Soltero">Soltero</option>
                             <option value="Casado">Casado</option>
                             <option value="Union Libre">Union Libre</option>
                         </select>
                     </div>
+                    <small id="errorCivilStatus" class="text-red"></small>
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-info" type="button">Genero</button>
                         </div>
                         <select class="custom-select" name="_gender">
-                            <option selected>Seleccione Aqui...</option>
+                            <option selected value="0">Seleccione Aqui...</option>
                             <option value="Hombre">Hombre</option>
                             <option value="Mujer">Mujer</option>
                             <option value="No Sabe">No Sabe</option>
                         </select>
                     </div>
+                    <small id="errorGender" class="text-red"></small>
                     <!--<div class="col_one_third col_last c-azul">
-                                    <label for="nacimiento">Fecha de nacimiento<small></small></label>
-                                    <input type="date" name="date" class="sm-form-control">
-                    </div>-->
+                    <label for="nacimiento">Fecha de nacimiento<small></small></label>
+                    <input type="date" name="date" class="sm-form-control">
+    </div>-->
                     <div class="form-group row">
                         <div class="col-sm-2">ARS</div>
                         <div class="col-sm-10">
@@ -233,7 +245,7 @@
                         <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
                         <div style="padding-left:20px"></div>
 
-                        <button id="btnInsert" type="submit" onclick="SendDateInsert()" class="btn btn-success col-sm-8">Registrar Paciente</button>
+                        <button type="submit" onclick="ValidateForm()" class="btn btn-success col-sm-8">Registrar Paciente</button>
                     </div>
                 </form>
 
@@ -363,5 +375,13 @@
     </div>
 </div>
 
+<style>
+    .sucess-input {
+        border-color: green;
+    }
 
+    .erro-input {
+        border-color: red;
+    }
+</style>
 <script src="~/js/customer.js"></script>

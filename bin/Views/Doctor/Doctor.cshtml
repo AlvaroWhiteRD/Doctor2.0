@@ -20,9 +20,8 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
-                        <th scope="col">Genero</th>
                         <th scope="col">Estado Civil</th>
-                        <th scope="col">CEDULA</th>
+                        <th scope="col">Cedula</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Direccion</th>
                         <th scope="col">Titulo</th>
@@ -39,74 +38,73 @@
                         @foreach (var item in ViewBag.listing)
                         {
 
-                    <tr>
+                            <tr>
 
-                        <td id="jsname">@item.Name</td>
-                        <td id="jslastName">@item.LastName</td>
-                        <td id="jsgender"> @item.Gender</td>
-                        <td id="jscivilStatus">@item.CivilStatus</td>
-                        <td id="jscivilStatus">@item.Dni</td>
-                        <td id="jsdni">@item.Phone</td>
-                        <td id="jsphone">@item.Address</td>
-                        <td id="jsname">@item.Title</td>
-                        <td>@item.Specialty</td>
-                        <td>
+                                <td id="jsname">@item.Name</td>
+                                <td id="jslastName">@item.LastName</td>
+                                <td id="jscivilStatus">@item.CivilStatus</td>
+                                <td id="jscivilStatus">@item.Dni</td>
+                                <td id="jsdni">@item.Phone</td>
+                                <td id="jsphone">@item.Address</td>
+                                <td id="jsname">@item.Title</td>
+                                <td>@item.Specialty</td>
+                                <td>
 
-                            <button onclick="IdSaves(@item.IdDoctor); EditDoctorModal('@item.Name','@item.LastName','@item.MotherLastName','@item.Gender','@item.CivilStatus','@item.Dni','@item.Phone','@item.Address','@item.Title','@item.Execuatur','@item.Specialty')"
-                                    data-toggle="modal" data-target="#updateModal" class="btn btn-outline-warning">
-                                Editar
-                            </button>
-                        </td>
-                        <td>
+                                    <button onclick="IdSaves(@item.IdDoctor); EditDoctorModal('@item.Name','@item.LastName','@item.MotherLastName','@item.Gender','@item.CivilStatus','@item.Dni','@item.Phone','@item.Address','@item.Title','@item.Execuatur','@item.Specialty')"
+                                            data-toggle="modal" data-target="#updateModal" class="btn btn-outline-warning">
+                                        Editar
+                                    </button>
+                                </td>
+                                <td>
 
-                            <input type="hidden" name="idHidden" value="{@item.IdDoctor}" />
-                            <button onclick="IdSaves(@item.IdDoctor)" data-toggle="modal" data-target="#deleteModal" class="btn btn-outline-danger">
-                                Eliminar
-                            </button>
-                            <!-- Modal eliminar-->
-                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header text-center">
-                                            <h5 class="modal-title  text-red" id="exampleModalLabel">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                                Eliminando Registro
-                                            </h5>
+                                    <input type="hidden" name="idHidden" value="{@item.IdDoctor}" />
+                                    <button onclick="IdSaves(@item.IdDoctor)" data-toggle="modal" data-target="#deleteModal" class="btn btn-outline-danger">
+                                        Eliminar
+                                    </button>
+                                    <!-- Modal eliminar-->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h5 class="modal-title  text-red" id="exampleModalLabel">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        Eliminando Registro
+                                                    </h5>
 
+                                                </div>
+                                                <form>
+
+                                                    <div class="modal-body text-center">
+                                                        <h5>
+                                                            Estas a punto de ELIMINAR este registro.
+                                                        </h5>
+                                                        <p class="text-red">Esta accion no es REVERSIBLE!!.</p>
+                                                        <p>Si estas seguro de lo que intentas realizar presiona Eliminar.</p>
+
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary  row-cols-sm-3"
+                                                                data-dismiss="modal">
+                                                            Cancelar
+                                                        </button>
+                                                        <button type="submit" class="btn btn-danger  col-sm-9" onclick="stopDefAction(event);SendId()">
+                                                            Eliminar Registro
+                                                        </button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <form onclick="stopDefAction(event);">
-
-                                            <div class="modal-body text-center">
-                                                <h5>
-                                                    Estas a punto de ELIMINAR este registro.
-                                                </h5>
-                                                <p class="text-red">Esta accion no es REVERSIBLE!!.</p>
-                                                <p>Si estas seguro de lo que intentas realizar presiona Eliminar.</p>
-
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary  row-cols-sm-3"
-                                                        data-dismiss="modal">
-                                                    Cancelar
-                                                </button>
-                                                <button type="submit" class="btn btn-danger  col-sm-9" onclick="SendId()">
-                                                    Eliminar Registro
-                                                </button>
-
-                                            </div>
-                                        </form>
                                     </div>
-                                </div>
-                            </div>
 
 
-                        </td>
+                                </td>
 
 
 
 
-                    </tr>
+                            </tr>
 
                         }
                     }
@@ -139,25 +137,30 @@
                             Nombre.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_name" placeholder="Nombre">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_name" placeholder="Nombre">
+                            <small id="errorName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
-                        <span id="errorName" class="text-red"></span>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-sm-2 col-form-label">
-                            Apellido.:
-                        </label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="_lastName" placeholder="Apellido Paterno">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-sm-2 col-form-label">
 
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
                             Apellido.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_motherLastname" placeholder="Apellido Materno">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_lastName" placeholder="Apellido Paterno">
+                            <small id="errorLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Apellido.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_motherLastname" placeholder="Apellido Materno">
+                            <small id="errorMotherLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -165,7 +168,9 @@
                             Cedula.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_dni" placeholder="Numero De Cedula">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="_dni" placeholder="Numero De Cedula">
+                            <small id="errorDni" class="text-red"></small>
+                            <small id="errorOnlyNumber" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -174,6 +179,7 @@
                         </label>
                         <div class="col-sm-10">
                             <input class="form-control" name="_address" placeholder="Direccion">
+                            <small id="errorAddress" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -181,7 +187,9 @@
                             Telefono.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_phone" placeholder="Telefono">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="_phone" placeholder="Telefono">
+                            <small id="errorPhone" class="text-red"></small>
+                            <small id="errorOnlyNumberPhone" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -189,7 +197,8 @@
                             Titulo.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="_title" placeholder="Titulo Del Doctor">
+                            <input onkeypress="return OnlyLetters(event)" class="form-control" name="_title" placeholder="Titulo Del Doctor">
+                            <small id="errorTitle" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -198,38 +207,42 @@
                         </label>
                         <div class="col-sm-10">
                             <input class="form-control" name="_execuatur" placeholder="Execuatur">
+                            <small id="errorExecuatur" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
                     </div>
 
                     <div class="input-group mb-3">
-                        
+
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-info" type="button">Estado Civil</button>
                         </div>
                         <select class="custom-select" name="_civilStatus">
-                            <option selected>Seleccione Aqui...</option>
+                            <option value="0" selected>Seleccione Aqui...</option>
                             <option value="Soltero">Soltero</option>
                             <option value="Casado">Casado</option>
                             <option value="Union Libre">Union Libre</option>
                         </select>
                     </div>
+                    <small id="errorCivilStatus" class="text-red"></small>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-info" type="button">Genero</button>
                         </div>
                         <select class="custom-select" name="_gender">
-                            <option selected>Seleccione Aqui...</option>
+                            <option selected value="0">Seleccione Aqui...</option>
                             <option value="Hombre">Hombre</option>
                             <option value="Mujer">Mujer</option>
                             <option value="No Sabe">No Sabe</option>
                         </select>
                     </div>
+                    <small id="errorGender" class="text-red"></small>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-info" type="button">Especialidad</button>
                         </div>
                         <select class="custom-select" name="_specialty">
-                            <option value="" selected="">Seleccione Aqui...</option>
+                            <option value="0" selected="">Seleccione Aqui...</option>
                             <option value="Alerg&oacute;logo">Alerg&oacute;logo</option>
                             <option value="Anestesi&oacute;logo">Anestesi&oacute;logo</option>
                             <option value="Angi&oacute;logo">Angi&oacute;logo</option>
@@ -268,12 +281,14 @@
                             <option value="Ginec&oacute;logo y Fertilidad">Ginec&oacute;logo y Fertilidad</option>
                         </select>
                     </div>
+                    <small id="errorSpecialty" class="text-red"></small>
+
 
                     <div class="form-group row">
                         <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
                         <div style="padding-left:20px"></div>
 
-                        <button id="btnInsert" type="submit" onclick="SendDataInsert()" class="btn btn-success col-sm-8">Registrar Doctor</button>
+                        <button id="btnInsert" type="submit" onclick="ValidateForm()" class="btn btn-success col-sm-8">Registrar Doctor</button>
                     </div>
                 </form>
 
@@ -301,7 +316,9 @@
                             Nombre.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="name" id="name" placeholder="Nombre">
+                            <input onpaste="return false" onkeypress="return OnlyLetters(event)" yyyyyyyyyy class="form-control" name="name" id="name" placeholder="Nombre">
+                            <small id="errorName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
                         <span id="errorName" class="text-red"></span>
                     </div>
@@ -310,7 +327,9 @@
                             Apellido.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="lastName" id="lastName" placeholder="Apellido Paterno">
+                            <input onpaste="return false" onkeypress="return OnlyLetters(event)" class="form-control" name="lastName" id="lastName" placeholder="Apellido Paterno">
+                            <small id="errorLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -318,7 +337,9 @@
                             Apellido.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="motherLastname" id="motherLastname" placeholder="Apellido Materno">
+                            <input onpaste="return false" onkeypress="return OnlyLetters(event)" class="form-control" name="motherLastname" id="motherLastname" placeholder="Apellido Materno">
+                            <small id="errorMotherLastName" class="text-red"></small>
+                            <small id="errorOnlyLetter" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -326,7 +347,9 @@
                             Cedula.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="dni" id="dni" placeholder="Numero De Cedula">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="dni" id="dni" placeholder="Numero De Cedula">
+                            <small id="errorDni" class="text-red"></small>
+                            <small id="errorOnlyNumber" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -335,6 +358,7 @@
                         </label>
                         <div class="col-sm-10">
                             <input class="form-control" name="address" id="address" placeholder="Direccion">
+                            <small id="errorAddress" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -342,7 +366,9 @@
                             Telefono.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="phone" id="phone" placeholder="Telefono">
+                            <input onKeyPress="return OnlyNumber(event)" oncopy="return false" onpaste="return false" class="form-control" name="phone" id="phone" placeholder="Telefono">
+                            <small id="errorPhone" class="text-red"></small>
+                            <small id="errorOnlyNumberPhone" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -350,7 +376,8 @@
                             Titulo.:
                         </label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="title" id="title" placeholder="Titulo Del Doctor">
+                            <input onpaste="return false" onkeypress="return OnlyLetters(event)" class="form-control" name="title" id="title" placeholder="Titulo Del Doctor">
+                            <small id="errorTitle" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -359,6 +386,7 @@
                         </label>
                         <div class="col-sm-10">
                             <input class="form-control" name="execuatur" id="execuatur" placeholder="Execuatur">
+                            <small id="errorExecuatur" class="text-red"></small>
                         </div>
                     </div>
                     <div class="input-group mb-3">
@@ -372,6 +400,7 @@
                             <option value="Union Libre">Union Libre</option>
                         </select>
                     </div>
+                    <small id="errorCivilStatus" class="text-red"></small>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-info" type="button">Genero</button>
@@ -383,6 +412,7 @@
                             <option value="No Sabe">No Sabe</option>
                         </select>
                     </div>
+                    <small id="errorGender" class="text-red"></small>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-info" type="button">Especialidad</button>
@@ -427,6 +457,7 @@
                             <option value="Ginec&oacute;logo y Fertilidad">Ginec&oacute;logo y Fertilidad</option>
                         </select>
                     </div>
+                    <small id="errorSpecialty" class="text-red"></small>
                     <div class="form-group row">
                         <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
                         <div style="padding-left:20px"></div>
@@ -440,6 +471,14 @@
         </div>
     </div>
 </div>
+<style>
+    .sucess-input {
+        border-color: green;
+    }
 
+    .erro-input {
+        border-color: red;
+    }
+</style>
 
 <script src="~/js/doctor.js"></script>

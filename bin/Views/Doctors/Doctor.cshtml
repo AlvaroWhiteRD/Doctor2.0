@@ -1,0 +1,293 @@
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+
+        <br />
+        <div id="messageSuccess" class="text-center text-capitalize text-bold"></div>
+        <div class="table-responsive-sm">
+            <table class="table" id="idTable">
+                <caption>Lista De Pacientes</caption>
+                <thead>
+
+                    <tr>
+                        <th scope="col">Nombre del paciente</th>
+                        <th scope="col">Motivo de cita</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Editar</th>
+                    </tr>
+                </thead>
+                <tbody id="itemTable">
+                    @if (ViewBag.listing != null)
+                    {
+                        @foreach (var item in ViewBag.listing)
+                        {
+
+                            <tr>
+
+                                <td id="">@item.CustomerName &nbsp; @item.CustomerLastName</td>
+                                <td id="">@item.Description</td>
+                                <td id="">
+                                    @{DateTime dateFormat = item.DateAppointment;
+                                        //le cambiamos el formato a la fecha de la cita
+                                        var dateFormatNew = dateFormat.ToString("dd/MM/yyyy"); }
+                                    @if (item.DateAppointment <= DateTime.Now.Date)
+                                    {
+                                        <span class="right badge badge-danger">@dateFormatNew</span>
+                                    }
+                                    else
+                                    {
+                                        @dateFormatNew
+                                    }
+
+                                </td>
+                                <td id="">
+                                    @item.TimeAppointment
+
+                                </td>
+                                <td class="text-capitalize">
+                                    @if (@item.State == "pendiente")
+                                    {
+                                        <span class="right badge badge-success">@item.State</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.DateAppointment <= DateTime.Now.Date)
+                                    {
+                                        <button onclick="EditDoctorModal('@item.CustomerName','@item.CustomerLastName','@item.Description','@item.IdAppointment')" data-toggle="modal" data-target="#InfoDoctorModal" class="btn btn-outline-danger">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button onclick="EditDoctorModal('@item.CustomerName','@item.CustomerLastName','@item.Description','@item.IdAppointment')" data-toggle="modal" data-target="#InfoDoctorModal" class="btn btn-outline-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    }
+
+                                </td>
+
+                            </tr>
+
+                        }
+                    }
+           
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <input type="hidden" name="_idDoctor" id="_idDoctor" value="@ViewBag.SessionIdDoctor" />
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <!-- /.content -->
+</div><!-- fin del contenedor -->
+<!-- Modal para ver detalle de la cita-->
+<div class="modal fade" id="InfoDoctorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Informacion del paciente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form onclick="stopDefAction(event);">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button data-toggle="modal" data-target="#ClinicalHistoryModal" class="btn btn-outline-primary" type="button">Ver historial del paciente</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Nombre.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="_name" id="_name" readonly>
+                        </div>
+                        <span id="errorName" class="text-red"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Apellido.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="_lastName" id="_lastName" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">
+                            Motivo/cita.:
+                        </label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" name="_description" id="_description" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">
+                            Notas medicas.:
+                        </label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" name="_medicalNotes" id="_medicalNotes"
+                                      placeholder="Cliente indica dolor de estomago. Se le indica realizarse estudios"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">
+                            Se le receto.:
+                        </label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" name="_prescribedMedical" id="_prescribedMedical" placeholder="Medicamento recetado. Dejarlo en blanco si no se le indico nada"></textarea>
+                        </div>
+                    </div>
+                    <input type="hidden" name="_idAppointment" id="_idAppointment" value="" />
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Proceso de la cita</button>
+                        </div>
+                        <select class="custom-select" name="_appointmentProcess" id="_appointmentProcess">
+                            <option selected>Seleccione Aqui...</option>
+                            <option value="cita cumplida">Cita Cumplida</option>
+                            <option value="cita pospuesta">Cita Pospuesta</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
+                        <div style="padding-left:20px"></div>
+                        <button onclick="UpdatePatientInformation()" type="submit" class="btn btn-success col-sm-8">Guardar Cambios</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal actualizar cliente-->
+<div class="modal fade" id="ClinicalHistoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Actualizar Informacion De LosPacientes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form onclick="stopDefAction(event);">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Nombre.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="name" id="name" placeholder="Nombre">
+                        </div>
+                        <span id="errorName" class="text-red"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Apellido.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="lastName" id="lastName" placeholder="Apellido Paterno">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Apellido.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="motherLastname" id="motherLastname" placeholder="Apellido Materno">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Cedula.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="dni" id="dni" placeholder="Numero De Cedula">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Direccion.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="address" id="address" placeholder="Direccion">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">
+                            Telefono.:
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="phone" id="phone" placeholder="Telefono">
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Estado Civil</button>
+                        </div>
+                        <select class="custom-select" name="civilStatus" id="civilStatus">
+                            <option selected>Seleccione Aqui...</option>
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Union Libre">Union Libre</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-info" type="button">Genero</button>
+                        </div>
+                        <select class="custom-select" name="gender" id="gender">
+                            <option selected>Seleccione Aqui...</option>
+                            <option value="Hombre">Hombre</option>
+                            <option value="Mujer">Mujer</option>
+                            <option value="No Sabe">No Sabe</option>
+                        </select>
+                    </div>
+
+                    <!--<div class="col_one_third col_last c-azul">
+                                    <label for="nacimiento">Fecha de nacimiento<small></small></label>
+                                    <input type="date" name="date" class="sm-form-control">
+                    </div>-->
+                    <!--<div class="form-group">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" value="2" name="chbxTerms" class="custom-control-input">
+                            <span class="custom-control-label" for="chbxTerms">Custom checkbox</span>
+                        </label>
+                    </div>-->
+
+                    <div class="form-group row">
+                        <div class="col-sm-2">ARS</div>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-group" type="checkbox" name="ars" id="ars"> Marcar Si El Paciente Tiene Seguro Medico
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
+                        <div style="padding-left:20px"></div>
+
+                        <button type="submit" class="btn btn-success col-sm-8" onclick="SendDateUpdate()">Actualizar Paciente</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/doctorsInfo.js"></script>

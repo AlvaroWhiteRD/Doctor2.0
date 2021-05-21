@@ -1,4 +1,5 @@
 ﻿using Doctor2._0.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,8 +21,9 @@ namespace Doctor2._0.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.SessionRol = HttpContext.Session.GetInt32("IdRol");
             return View();
-        }
+        }//.GetInt32("IdRol");
 
         public IActionResult Privacy()
         {

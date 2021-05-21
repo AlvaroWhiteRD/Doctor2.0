@@ -1,4 +1,5 @@
-
+﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mr_Doctor.Models;
 using System;
@@ -14,10 +15,26 @@ namespace Doctor2.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("User")))
+            {
+                //se llama la session
+                ViewBag.SessionUser = HttpContext.Session.GetString("User");
+                ViewBag.SessionRol = HttpContext.Session.GetInt32("IdRol");
 
-            ViewBag.listing = SecretaryModel.ShowSecretary();
+                //si la session es distinta de 1(secretaria) no tendra acceso a esta area.
+                if (HttpContext.Session.GetInt32("IdRol") != 1)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
-            return View("../Secretary/Secretary");
+                ViewBag.listing = SecretaryModel.ShowSecretary();
+
+                return View("../Secretary/Secretary");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
         }
 
         // CustomerModelEntyties entyties
@@ -71,6 +88,13 @@ namespace Doctor2.Controllers
         {
             SecretaryModel.DeleteSecretary(id);
             return View("../Secretary/Secretary");
+        }
+
+        public List<SecretaryModelEntyties> Secretary()
+        {
+            List<SecretaryModelEntyties> list = new List<SecretaryModelEntyties>();
+            list=SecretaryModel.ShowSecretary();
+            return list;
         }
 
     }

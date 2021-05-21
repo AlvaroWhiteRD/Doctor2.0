@@ -49,7 +49,7 @@ function EditDoctorModal(Name, LastName, MotherLastName, Gender, CivilStatus, Dn
     document.getElementById('title').value = Title;
     document.getElementById('execuatur').value = Execuatur;
     document.getElementById('specialty').value = Epecialty;
-   
+
 
 }
 function SendDataUpdate() {
@@ -91,7 +91,7 @@ function SendDataInsert() {
 
 
     let formData = new FormData();
-   
+
     formData.append("Name", document.getElementsByName('_name')[0].value);
     formData.append("LastName", document.getElementsByName('_lastName')[0].value);
     formData.append("MotherLastName", document.getElementsByName('_motherLastname')[0].value);
@@ -134,27 +134,139 @@ function reloadWindows() {
 }
 
 function ValidateForm() {
-    let name = document.getElementsByName("_name").value;
-    let lastName = document.getElementsByName("_lastName").value;
-    let motherLastname = document.getElementsByName("_motherLastname").value;
-    let dni = document.getElementsByName("_dni").value;
-    let address = document.getElementsByName("_address").value;
-    let phone = document.getElementsByName("_phone").value;
-    let civilStatus = document.getElementsByName("_civilStatus").value;
-    let gender = document.getElementsByName("_gender").value;
+    let name = document.getElementsByName("_name")[0].value;
+    let lastName = document.getElementsByName("_lastName")[0].value;
+    let motherLastname = document.getElementsByName("_motherLastname")[0].value;
+    let dni = document.getElementsByName("_dni")[0].value;
+    let address = document.getElementsByName("_address")[0].value;
+    let phone = document.getElementsByName("_phone")[0].value;
+    let title = document.getElementsByName("_title")[0].value;
+    let execuatur = document.getElementsByName("_execuatur")[0].value;
+    let civilStatus = document.getElementsByName("_civilStatus")[0].value;
+    let gender = document.getElementsByName("_gender")[0].value;
+    let specialty = document.getElementsByName("_specialty")[0].value;
 
+    if (name == "" || name == null || name.trim() == "") {
+        document.getElementById("errorName").innerHTML = "* nombre es requerido";
+        document.getElementsByName("_name")[0].className = "form-control erro-input";
+        document.getElementsByName("_name")[0].focus();
+        return;
+    }
+    document.getElementsByName("_name")[0].className = "form-control sucess-input";
+    document.getElementById("errorName").innerHTML = "";
+
+    if (lastName == "" || lastName == null || lastName.trim() == "") {
+        document.getElementById("errorLastName").innerHTML = "* apellido es requerido";
+        document.getElementsByName("_lastName")[0].className = "form-control erro-input";
+        document.getElementsByName("_lastName")[0].focus();
+        return;
+    }
+    document.getElementsByName("_lastName")[0].className = "form-control sucess-input";
+    document.getElementById("errorLastName").innerHTML = "";
+
+    if (motherLastname == "" || motherLastname == null || motherLastname.trim() == "") {
+        document.getElementById("errorMotherLastName").innerHTML = "* apellido materno es requerido";
+        document.getElementsByName("_motherLastname")[0].className = "form-control erro-input";
+        document.getElementsByName("_motherLastname")[0].focus();
+        return;
+    }
+    document.getElementsByName("_motherLastname")[0].className = "form-control sucess-input";
+    document.getElementById("errorMotherLastName").innerHTML = "";
+
+    if (dni == "" || dni == null || dni.trim() == "") {
+        document.getElementById("errorDni").innerHTML = "* cedula es requerido";
+        document.getElementsByName("_dni")[0].className = "form-control erro-input";
+        document.getElementsByName("_dni")[0].focus();
+        return;
+    }
+    document.getElementsByName("_dni")[0].className = "form-control sucess-input";
+    document.getElementById("errorDni").innerHTML = "";
+    document.getElementById("errorOnlyNumber").innerHTML = "";
+    document.getElementById("errorOnlyNumberPhone").innerHTML = "";
+
+    if (address == "" || address == null || address.trim() == "") {
+        document.getElementById("errorAddress").innerHTML = "* direccion es requerida";
+        document.getElementsByName("_address")[0].className = "form-control erro-input";
+        document.getElementsByName("_address")[0].focus();
+        return;
+    }
+    document.getElementsByName("_address")[0].className = "form-control sucess-input";
+    document.getElementById("errorAddress").innerHTML = "";
+
+    if (phone == "" || phone == null || phone.trim() == "") {
+        document.getElementById("errorPhone").innerHTML = "* telefono es requerido";
+        document.getElementsByName("_phone")[0].className = "form-control erro-input";
+        document.getElementsByName("_phone")[0].focus();
+        return;
+    }
+    document.getElementsByName("_phone")[0].className = "form-control sucess-input";
+    document.getElementById("errorPhone").innerHTML = "";
+    document.getElementById("errorOnlyNumber").innerHTML = "";
+    document.getElementById("errorOnlyNumberPhone").innerHTML = "";
+
+    if (title == "" || title == null || title.trim() == "") {
+        document.getElementById("errorTitle").innerHTML = "* titulo es requerido";
+        document.getElementsByName("_title")[0].className = "form-control erro-input";
+        document.getElementsByName("_title")[0].focus();
+        return;
+    }
+    document.getElementsByName("_title")[0].className = "form-control sucess-input";
+    document.getElementById("errorTitle").innerHTML = "";
+
+    if (execuatur == "" || execuatur == null || execuatur.trim() == "") {
+        document.getElementById("errorExecuatur").innerHTML = "* execuatur es requerido";
+        document.getElementsByName("_execuatur")[0].className = "form-control erro-input";
+        document.getElementsByName("_execuatur")[0].focus();
+        return;
+    }
+    document.getElementsByName("_execuatur")[0].className = "form-control sucess-input";
+    document.getElementById("errorExecuatur").innerHTML = "";
+
+    if (civilStatus == "" || civilStatus == null || civilStatus == 0 || civilStatus == '0') {
+        document.getElementById("errorCivilStatus").innerHTML = "* estado civil es requerido";
+        document.getElementsByName("_civilStatus")[0].className = "custom-select erro-input";
+        document.getElementsByName("_civilStatus")[0].focus();
+        return;
+    }
+    document.getElementsByName("_civilStatus")[0].className = "form-control sucess-input";
+    document.getElementById("errorCivilStatus").innerHTML = "";
+
+    if (gender == "" || gender == null || gender == 0 || gender == '0') {
+        document.getElementById("errorGender").innerHTML = "* genero es requerido";
+        document.getElementsByName("_gender")[0].className = "custom-select erro-input";
+        document.getElementsByName("_gender")[0].focus();
+        return;
+    }
+    document.getElementsByName("_gender")[0].className = "form-control sucess-input";
+    document.getElementById("errorGender").innerHTML = "";
+
+    if (specialty == "" || specialty == null || specialty.trim() == "" || specialty == 0 || specialty == '0') {
+        document.getElementById("errorSpecialty").innerHTML = "* especialidad es requerida";
+        document.getElementsByName("_specialty")[0].className = "form-control erro-input";
+        document.getElementsByName("_specialty")[0].focus();
+        return;
+    }
+    document.getElementsByName("_specialty")[0].className = "form-control sucess-input";
+    document.getElementById("errorSpecialty").innerHTML = "";
+
+    SendDataInsert();
 }
 
-
-function ValidateName() {
-    //document.getElementById("btnInsert").disabled = !document.getElementsByName("_name").value;
-    let name = document.getElementsByName("_name");
-    if (name == "" || name == null || name == undefined || name.length <= 3) {
-        //btnInsert.disabled = true
-        errorName.innerHTML = "El nombre es obligatorio.";
-        return false;
-    } else {
-       // btnInsert.disabled = false
+function OnlyNumber(event) {
+    if (event.key != (key >= 48 && key <= 57) || event.key != (key == 8)) {
+        document.getElementById("errorOnlyNumber").innerHTML = "* campo de solo numeros";
+        document.getElementById("errorOnlyNumberPhone").innerHTML = "* campo de solo numeros";
     }
+    var key = window.Event ? event.which : event.keyCode
+    return ((key >= 48 && key <= 57) || (key == 8))
+}
+function OnlyLetters(event) {
+    //alert("event " + event.keyCode);
+    letter = (document.all) ? event.keyCode : event.which;
+    if (letter == 8) return true;//espacio
+    pattern = /[A-Za-z\s]/;
+    keyPressed = String.fromCharCode(letter);
+
+    return pattern.test(keyPressed);
 }
 

@@ -6,7 +6,7 @@
 
         <br />
         <div id="messageSuccess" class="text-center text-capitalize text-bold"></div>
-        <h1 class="title">Selecciona La Fecha Del Calendario Para Agendar Citas</h1>
+        <h1 class="title">Selecciona la fecha del calendario para agendar citas</h1>
 
         <div class="calendar">
             <div class="calendar__info">
@@ -32,14 +32,16 @@
         <div class="content-header">
             <div class="container-fluid">
 
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Agendar Cita
-                </button>
+                <!-- Button tooltip modal -->
+
+               <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="un tolticulo">
+                    Tooltip on right
+                </button>-->
+
 
             </div><!-- /.container-fluid -->
             <br />
-            <div id="messageSuccess" class="text-center text-capitalize text-bold"></div>
+            <div id="messageSuccess" class="text-center text-bold"></div>
             <div class="table-responsive-sm">
                 <table class="table" id="idTable">
                     <caption>Lista De Citas Medicas</caption>
@@ -169,7 +171,7 @@
                                 <button class="btn btn-outline-info" type="button">Paciente.:</button>
                             </div>
                             <select class="custom-select" name="_customer">
-                                <option selected>Seleccione Aqui...</option>
+                                <option selected>Seleccione aqui...</option>
                                 <option value="1">Juan</option>
                                 <option value="2">Pedro</option>
                                 <option value="3">Bartolomeo</option>
@@ -180,7 +182,7 @@
                                 <button class="btn btn-outline-info" type="button">Doctor.:</button>
                             </div>
                             <select class="custom-select" name="_doctor">
-                                <option selected>Seleccione Aqui...</option>
+                                <option selected>Seleccione aqui...</option>
                                 <option value="1">Candido</option>
                                 <option value="2">Petruco</option>
                                 <option value="3">Percio</option>
@@ -191,11 +193,11 @@
                                 Motivo.:
                             </label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="_description" placeholder="Ejemplo.: paciente presenta bomito y fiebre"></textarea>
+                                <textarea class="form-control" name="_description" placeholder="Ejemplo.: paciente presenta vomito y fiebre"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="min-date" class="col-sm-4 control-label">Fecha & Hora</label>
+                            <label for="min-date" class="col-sm-4 control-label">Fecha/Hora</label>
                             <div class="col-sm-12">
                                 <div class="input-group input-daterange">
                                     <input id="selectedDay" name="_dateAppointment" type="text" class="form-control" readonly>
@@ -204,7 +206,7 @@
                                     </div>
                                     <input name="_timeAppointment" type="time" class="form-control">
                                 </div>
-                                <small class="text-red text-capitalize">!Para cambiar la fecha regresa a la ventana anterior</small>
+                                <small class="text-red">Para cambiar la fecha regresa a la ventana anterior</small>
 
                             </div>
                         </div>
@@ -212,7 +214,7 @@
                             <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
                             <div style="padding-left:20px"></div>
 
-                            <button id="btnInsert" type="submit" class="btn btn-success col-sm-8" onclick="InsertAppointmentNew()">Registrar Doctor</button>
+                            <button id="btnInsert" type="submit" class="btn btn-success col-sm-8" onclick="InsertAppointmentNew()">Registrar Cita</button>
                         </div>
                     </form>
                 </div>

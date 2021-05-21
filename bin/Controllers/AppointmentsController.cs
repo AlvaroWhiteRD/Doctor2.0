@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mr_Doctor.Models;
 using System;
@@ -14,10 +15,30 @@ namespace Doctor2.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("User")))
+            {
+                //se llama la session
+                ViewBag.SessionUser = HttpContext.Session.GetString("User");
+                ViewBag.SessionRol = HttpContext.Session.GetInt32("IdRol");
 
-            ViewBag.listing = AppointmentModel.ShowAppointment();
+                //si la session es distinta de 1(secretaria) no tendra acceso a esta area.
 
-            return View("../Appointment/Appointment");
+                if (HttpContext.Session.GetInt32("IdRol") != 1)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ViewBag.listing = AppointmentModel.ShowAppointment();
+
+                return View("../Appointment/Appointment");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+           
+
+            
         }
 
         // CustomerModelEntyties entyties
@@ -98,6 +119,16 @@ namespace Doctor2.Controllers
             }
             return myreturn;
             //return View("../Doctor/Doctor");
+        }
+
+        
+        [HttpGet]
+        public List<AppointmentModelEntyties> GetDataCalendar()
+        {//metodo que trae la data para luego mostrarla en el calendario usando ajax
+
+            return AppointmentModel.ShowAppointment();
+
+            //return View("../Appointment/Appointment");
         }
 
     }

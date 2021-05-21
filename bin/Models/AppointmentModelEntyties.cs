@@ -124,6 +124,52 @@ namespace Mr_Doctor.Models
             return listing;
 
         }
+
+        public static List<AppointmentModelEntyties> ShowAppointmentForDoctor( int idDoctor )
+        {
+            MySqlDataReader readerRow;
+
+            MySqlConnection Connection = null;
+
+            Connection = new MySqlConnection("Server=localhost;Uid=root;Password=;Database=mrdoctor;Port=3306");
+            Connection.Open();
+            //realizamos un select con inner join para traer el nombre y apellido del paciente
+            string sqlShow = "Select id_appointment,description,date_appointment,time_appointment,state,customer.name, customer.last_name " +
+                                 "From appointment " +
+                                    "INNER JOIN doctor ON appointment.id_doctor = doctor.id_doctor " +
+                                    "INNER JOIN customer ON appointment.id_customer = customer.id_customer" +
+                                    " WHERE appointment.id_doctor = @idDoctor and state = 'pendiente' " +
+                                    "ORDER BY date_appointment";
+
+            MySqlCommand cmd = new MySqlCommand(sqlShow, Connection);
+            cmd.Parameters.AddWithValue("@idDoctor", idDoctor);
+            readerRow = cmd.ExecuteReader();
+
+            //creamos la lista que almacenara el resultado de la busqueda en la base de datos
+            List<AppointmentModelEntyties> listing = new List<AppointmentModelEntyties>();
+            var prueba = readerRow.Read();
+
+            while (readerRow.Read())
+            {
+                listing.Add(new AppointmentModelEntyties
+                {//0 id cita // 1 descripcion // 2date apoitment // 3 la hora // 4 state
+                    //5 nomb doc 6 app doct 7 nombre cleinte appe 8
+                    IdAppointment = readerRow.GetInt32("id_appointment"),
+                    Description = readerRow.GetString("description"),
+                    TimeAppointment = readerRow.GetString("time_appointment"),
+                    State = readerRow.GetString("state"),
+                    DateAppointment = readerRow.GetDateTime("date_appointment"),
+                    CustomerName = readerRow.GetString("name"),
+                    CustomerLastName = readerRow.GetString("last_name")
+
+                });
+            }
+            Connection.Close();
+            readerRow.Close();
+            return listing;
+
+        }
+
         public static int DeleteAppointment(int id)
         {
             MySqlDataReader readerRow;
@@ -176,5 +222,6 @@ namespace Mr_Doctor.Models
             }
             return myReturn;
         }
+      
     }
 }

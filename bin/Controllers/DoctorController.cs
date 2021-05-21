@@ -1,4 +1,6 @@
-
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mr_Doctor.Models;
 using System;
@@ -7,17 +9,35 @@ using System.Text.Encodings.Web;
 
 namespace Doctor2.Controllers
 {
+
     public class DoctorController : Controller
     {
         // 
-        // GET: traemos todos los registros
+
         [HttpGet]
         public IActionResult Index()
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("User")))
+            {
+                //se llama la session
+                ViewBag.SessionUser = HttpContext.Session.GetString("User");
+                ViewBag.SessionRol = HttpContext.Session.GetInt32("IdRol");
 
-            ViewBag.listing = DoctorModel.ShowDoctor();
+                //si la session es distinta de 1(secretaria) no tendra acceso a esta area.
+                if (HttpContext.Session.GetInt32("IdRol") != 1)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
-            return View("../Doctor/Doctor");
+                ViewBag.listing = DoctorModel.ShowDoctor();
+
+                return View("../Doctor/Doctor");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
         }
 
         // CustomerModelEntyties entyties
@@ -25,8 +45,8 @@ namespace Doctor2.Controllers
         public IActionResult Create(DoctorModelEntyties entyties,
             string name, string gender, string lastName,
             string motherLastname, string dni, string address,
-            string phone, string civilStatus, string title, 
-            string execuatur,string specialty)
+            string phone, string civilStatus, string title,
+            string execuatur, string specialty)
         {
             entyties.Name = name;
             entyties.LastName = lastName;
@@ -80,6 +100,13 @@ namespace Doctor2.Controllers
         {
             DoctorModel.DeleteDoctor(id);
             return View("../Doctor/Doctor");
+        }
+
+        public List<DoctorModelEntyties> Doctor()
+        {
+            List<DoctorModelEntyties> list = new List<DoctorModelEntyties>();
+            list = DoctorModel.ShowDoctor();
+            return list;
         }
 
     }
