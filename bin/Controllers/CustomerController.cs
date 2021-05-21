@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mr_Doctor.Models;
@@ -95,19 +95,15 @@ namespace Doctor2.Controllers
             CustomerModel.DeleteCustomer(id);
             return View("../Customer/Customer");
         }
-        /*[HttpGet]
-        public IActionResult EditCustomer(int id)
+        
+        [HttpGet]
+        public List<CustomerModelEntyties> Customer()
         {
-            //Array listing;
-            List<CustomerModelEntyties> listing =  new List<CustomerModelEntyties>();
-            listing = CustomerModel.EditCustomer(id);
-            //return listing;
-            return View("../Customer/Customer", listing);
-        }*/
-        //[HttpGet]
-        //metodo que trae los datos para ser se mostrados por js en la vista
-        //public ActionResult<IEnumerable<CustomerModelEntyties>> GetCustomer() =>
-        // CustomerModel.ShowCustomer();
+            List<CustomerModelEntyties> list = new List<CustomerModelEntyties>();
+            list = CustomerModel.ShowCustomer();
+            return list;
+        }
+
 
     } 
     

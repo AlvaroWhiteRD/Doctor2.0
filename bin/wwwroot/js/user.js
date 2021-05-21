@@ -33,11 +33,11 @@ function getSecretary() {
         .then(data => {
             userTypeSelect.innerHTML = `
                         <div class="input-group-prepend">
-                            <button class="btn btn-outline-success" type="button">Seleccione Secretaria</button>
+                            <button id="buttonError" class="btn btn-outline-success" type="button">Seleccione Secretaria</button>
                         </div>
                         <select class="custom-select" id="userSelect" onchange="UserTypeSelect()">
                          
-                        <option selected>Seleccione Aqui...</option>
+                        <option selected value="0">Seleccione Aqui...</option>
                            ${data.map((item, i) =>`
                             <option value="${item["idSecretary"]}">${item.name}&nbsp &nbsp${item.lastName}</option>
                           
@@ -58,11 +58,11 @@ function getDoctor() {
             console.log(data)
             userTypeSelect.innerHTML = `
                         <div class="input-group-prepend">
-                            <button class="btn btn-outline-success" type="button">Seleccione El Doctor</button>
+                            <button id="buttonError" class="btn btn-outline-success" type="button">Seleccione El Doctor</button>
                         </div>
-                        <select class="custom-select"  id="userSelect" onchange="UserTypeSelect()">
+                        <select class="custom-select" id="userSelect" onchange="UserTypeSelect()">
                          
-                        <option selected>Seleccione Aqui...</option>
+                        <option value="0" selected>Seleccione Aqui...</option>
                            ${data.map((item, i) => `
                             <option value="${item["idDoctor"]}">${item.name}&nbsp &nbsp${item.lastName}</option>
                           
@@ -177,8 +177,6 @@ function SendDataUpdate() {
         .catch(error => console.error('Error:', error))
 }
 
-
-
 //funcion que recargara la pagina luego de realizar crud
 function reloadWindows() {
 
@@ -189,6 +187,93 @@ function reloadWindows() {
     }, 2000);
 }
 
+function ValidateForm() {
+    //typeUserSelecteUpdate;
+    let userName = document.getElementsByName("_userName")[0].value;
+    let password = document.getElementsByName("_password")[0].value;
+    let passwordRepeat = document.getElementsByName("passwordRepeat")[0].value;
+    
+
+    //validamos que este seleccionado el tipo de usuario
+    if (typeUserSelecte != 0) {
+        document.getElementById("errorTypeUser").innerHTML = "";
+        document.getElementById("userType").className = "custom-select sucess-input";
+        document.getElementById("buttonErro").className = "btn btn-outline-success sucess-input";
+
+    } else {
+        document.getElementById("errorTypeUser").innerHTML = "* Selecciona el tipo de usuario";
+        document.getElementById("userType").className = "custom-select erro-input";
+        document.getElementById("buttonErro").className = "btn btn-danger erro-input";
+        return
+    }
+
+    let userSelect = document.getElementById("userSelect").value;
+
+    if (userSelect != 0) {
+        document.getElementById("errorUserSelect").innerHTML = "";
+        document.getElementById("userSelect").className = "custom-select sucess-input";
+        document.getElementById("buttonError").className = "btn btn-outline-success sucess-input";
+    } else {
+        document.getElementById("errorUserSelect").innerHTML = "* Selecciona el usuario";
+        document.getElementById("userSelect").className = "custom-select erro-input";
+        document.getElementById("buttonError").className = "btn btn-danger erro-input";
+        return
+    }
+    //expresion regular valida email
+    RegExpEmail = `^[^@]+@[^@]+\.[a-zA-Z]{2,}$`;
+    let regexEmail = new RegExp( RegExpEmail );
+
+    if (userName == "" || userName == null || userName.trim() == "") {
+        document.getElementById("errorUserName").innerHTML = "* Correo electronico es requerido";
+        document.getElementsByName("_userName")[0].className = "form-control erro-input";
+        document.getElementsByName("_userName")[0].focus();
+        return;
+    }
+    document.getElementsByName("_userName")[0].className = "form-control sucess-input";
+    document.getElementById("errorUserName").innerHTML = "";
+
+    if (!regexEmail.test(userName)) {
+        document.getElementsByName("_userName")[0].className = "form-control erro-input";
+        document.getElementById("errorUserName").innerHTML = "* no es un correo valido";
+        document.getElementsByName("_userName")[0].focus();
+        return;
+    }
+    document.getElementsByName("_userName")[0].className = "form-control sucess-input";
+    document.getElementById("errorUserName").innerHTML = "";
+
+    if (password == "" || password == null || password.trim() == "") {
+        document.getElementById("errorPassword").innerHTML = "* contrasena es requerida";
+        document.getElementsByName("_password")[0].className = "form-control erro-input";
+        document.getElementsByName("_password")[0].focus();
+        return;
+    }
+    document.getElementsByName("_password")[0].className = "form-control sucess-input";
+    document.getElementById("errorPassword").innerHTML = "";
+
+    if (passwordRepeat == "" || passwordRepeat == null || passwordRepeat.trim() == "") {
+        document.getElementById("errorPasswordRepeat").innerHTML = "* repita la contrasena";
+        document.getElementsByName("passwordRepeat")[0].className = "form-control erro-input";
+        document.getElementsByName("passwordRepeat")[0].focus();
+        return;
+    }
+    document.getElementsByName("_password")[0].className = "form-control sucess-input";
+    document.getElementById("errorPasswordRepeat").innerHTML = "";
+
+    if (password != passwordRepeat) {
+        document.getElementById("errorPasswordNoMatch").innerHTML = "* contrasenas no son iguales";
+        document.getElementsByName("passwordRepeat")[0].value = "";
+        document.getElementsByName("_password")[0].value = "";
+        document.getElementsByName("_password")[0].focus();
+        document.getElementsByName("_password")[0].className = "form-control erro-input";
+        document.getElementsByName("passwordRepeat")[0].className = "form-control erro-input";
+        return;  
+    } 
+    document.getElementById("errorPasswordNoMatch").innerHTML = "";
+    document.getElementsByName("_password")[0].className = "form-control sucess-input";
+    document.getElementsByName("passwordRepeat")[0].className = "form-control sucess-input";
+  
+    UserDataSend();
+}
 
 
 

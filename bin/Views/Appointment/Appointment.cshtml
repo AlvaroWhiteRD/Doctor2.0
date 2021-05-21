@@ -33,10 +33,9 @@
             <div class="container-fluid">
 
                 <!-- Button tooltip modal -->
-
-               <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="un tolticulo">
-                    Tooltip on right
-                </button>-->
+                <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="un tolticulo">
+                     Tooltip on right
+                 </button>-->
 
 
             </div><!-- /.container-fluid -->
@@ -83,55 +82,55 @@
 
                                     <!-- <td>
 
-                    <button onclick="IdSaves(); EditDoctorModal('','','','','','')"
-                            data-toggle="modal" data-target="#updateModal" class="btn btn-outline-warning">
-                        Editar
-                    </button>
-                </td>
-                <td>-->
+                                        <button onclick="IdSaves(); EditDoctorModal('','','','','','')"
+                                                data-toggle="modal" data-target="#updateModal" class="btn btn-outline-warning">
+                                            Editar
+                                        </button>
+                                    </td>
+                                    <td>-->
                                     <!-- <input type="hidden" name="idHidden" value="{}" />
-                 <button onclick="IdSaves()" data-toggle="modal" data-target="#deleteModal" class="btn btn-outline-danger">
-                     Eliminar
-                 </button>-->
+                                    <button onclick="IdSaves()" data-toggle="modal" data-target="#deleteModal" class="btn btn-outline-danger">
+                                        Eliminar
+                                    </button>-->
                                     <!-- Modal eliminar-->
                                     <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                     <div class="modal-dialog" role="document">
-                         <div class="modal-content">
-                             <div class="modal-header text-center">
-                                 <h5 class="modal-title  text-red" id="exampleModalLabel">
-                                     <i class="fa fa-trash" aria-hidden="true"></i>
-                                     Eliminando Registro
-                                 </h5>
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h5 class="modal-title  text-red" id="exampleModalLabel">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        Eliminando Registro
+                                                    </h5>
 
-                             </div>
-                             <form onclick="stopDefAction(event);">
+                                                </div>
+                                                <form onclick="stopDefAction(event);">
 
-                                 <div class="modal-body text-center">
-                                     <h5>
-                                         Estas a punto de ELIMINAR este registro.
-                                     </h5>
-                                     <p class="text-red">Esta accion no es REVERSIBLE!!.</p>
-                                     <p>Si estas seguro de lo que intentas realizar presiona Eliminar.</p>
+                                                    <div class="modal-body text-center">
+                                                        <h5>
+                                                            Estas a punto de ELIMINAR este registro.
+                                                        </h5>
+                                                        <p class="text-red">Esta accion no es REVERSIBLE!!.</p>
+                                                        <p>Si estas seguro de lo que intentas realizar presiona Eliminar.</p>
 
-                                 </div>
+                                                    </div>
 
-                                 <div class="modal-footer">
-                                     <button type="button" class="btn btn-secondary  row-cols-sm-3"
-                                             data-dismiss="modal">
-                                         Cancelar
-                                     </button>
-                                     <button type="submit" class="btn btn-danger  col-sm-9" onclick="SendId()">
-                                         Eliminar Registro
-                                     </button>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary  row-cols-sm-3"
+                                                                data-dismiss="modal">
+                                                            Cancelar
+                                                        </button>
+                                                        <button type="submit" class="btn btn-danger  col-sm-9" onclick="SendId()">
+                                                            Eliminar Registro
+                                                        </button>
 
-                                 </div>
-                             </form>
-                         </div>
-                     </div>
-                 </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
 
 
-                 </td>-->
+                                    </td>-->
 
 
 
@@ -166,27 +165,11 @@
                 <div class="modal-body">
                     <input type="hidden" name="event-index">
                     <form class="form-horizontal" onclick="stopDefAction(event);">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-info" type="button">Paciente.:</button>
-                            </div>
-                            <select class="custom-select" name="_customer">
-                                <option selected>Seleccione aqui...</option>
-                                <option value="1">Juan</option>
-                                <option value="2">Pedro</option>
-                                <option value="3">Bartolomeo</option>
-                            </select>
+                        <small id="errorDoctor" class="text-red"></small>
+                        <div class="input-group mb-3" id="doctorSelected">
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-info" type="button">Doctor.:</button>
-                            </div>
-                            <select class="custom-select" name="_doctor">
-                                <option selected>Seleccione aqui...</option>
-                                <option value="1">Candido</option>
-                                <option value="2">Petruco</option>
-                                <option value="3">Percio</option>
-                            </select>
+                        <small id="errorCustomer" class="text-red"></small>
+                        <div class="input-group mb-3" id="customerSelected">
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">
@@ -194,19 +177,23 @@
                             </label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" name="_description" placeholder="Ejemplo.: paciente presenta vomito y fiebre"></textarea>
+                                <small id="errorDescription" class="text-red"></small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="min-date" class="col-sm-4 control-label">Fecha/Hora</label>
+                           
                             <div class="col-sm-12">
+                                <small id="errorTimeAppointment" class="text-red"></small>
+                                <small id="errorDates" class="text-red"></small>
                                 <div class="input-group input-daterange">
                                     <input id="selectedDay" name="_dateAppointment" type="text" class="form-control" readonly>
                                     <div class="input-group-prepend input-group-append">
                                         <div class="input-group-text">Hora</div>
                                     </div>
-                                    <input name="_timeAppointment" type="time" class="form-control">
+                                    <input name="_timeAppointment" type="time" class="form-control " id="erroTime">
                                 </div>
-                                <small class="text-red">Para cambiar la fecha regresa a la ventana anterior</small>
+                                <small class="text-blue">Para cambiar la fecha regresa a la ventana anterior</small>
 
                             </div>
                         </div>
@@ -214,7 +201,7 @@
                             <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
                             <div style="padding-left:20px"></div>
 
-                            <button id="btnInsert" type="submit" class="btn btn-success col-sm-8" onclick="InsertAppointmentNew()">Registrar Cita</button>
+                            <button id="btnInsert" type="submit" class="btn btn-success col-sm-8" onclick="FormValidate()">Registrar Cita</button>
                         </div>
                     </form>
                 </div>
@@ -223,5 +210,13 @@
         </div>
     </div>
 </div>
+<style>
+    .sucess-input {
+        border-color: green;
+    }
 
+    .erro-input {
+        border-color: red;
+    }
+</style>
 <script src="~/js/calendar/calendario.js"></script>

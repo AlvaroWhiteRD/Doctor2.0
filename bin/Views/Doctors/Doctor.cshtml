@@ -73,7 +73,7 @@
 
                         }
                     }
-           
+
 
                 </tbody>
             </table>
@@ -135,6 +135,7 @@
                         <div class="col-sm-8">
                             <textarea class="form-control" name="_medicalNotes" id="_medicalNotes"
                                       placeholder="Cliente indica dolor de estomago. Se le indica realizarse estudios"></textarea>
+                            <small id="errorMedicalNotes" class="text-red"></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -143,23 +144,26 @@
                         </label>
                         <div class="col-sm-8">
                             <textarea class="form-control" name="_prescribedMedical" id="_prescribedMedical" placeholder="Medicamento recetado. Dejarlo en blanco si no se le indico nada"></textarea>
+                            <small id="errorPrescribedMedical" class="text-red"></small>
                         </div>
                     </div>
                     <input type="hidden" name="_idAppointment" id="_idAppointment" value="" />
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <button class="btn btn-outline-info" type="button">Proceso de la cita</button>
+                            <button id="processButton" class="btn btn-outline-info" type="button">Proceso de la cita</button>
                         </div>
                         <select class="custom-select" name="_appointmentProcess" id="_appointmentProcess">
-                            <option selected>Seleccione Aqui...</option>
+                            <option selected value="0">Seleccione Aqui...</option>
                             <option value="cita cumplida">Cita Cumplida</option>
                             <option value="cita pospuesta">Cita Pospuesta</option>
                         </select>
                     </div>
+                    <small id="errorProcess" class="text-red"></small>
+
                     <div class="form-group row">
                         <button type="button" class="btn btn-secondary col-sm-3" data-dismiss="modal">Cancelar</button>
                         <div style="padding-left:20px"></div>
-                        <button onclick="UpdatePatientInformation()" type="submit" class="btn btn-success col-sm-8">Guardar Cambios</button>
+                        <button onclick="ValidateForm()" type="submit" class="btn btn-success col-sm-8">Guardar Cambios</button>
                     </div>
                 </form>
 
@@ -289,5 +293,13 @@
     </div>
 </div>
 
+<style>
+    .sucess-input {
+        border-color: green;
+    }
 
+    .erro-input {
+        border-color: red;
+    }
+</style>
 <script src="~/js/doctorsInfo.js"></script>

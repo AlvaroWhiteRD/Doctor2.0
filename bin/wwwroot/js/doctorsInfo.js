@@ -73,7 +73,6 @@ function UpdatePatientInformation() {
 
 function SendDataInsert() {
 
-
     let formData = new FormData();
 
     formData.append("Name", document.getElementsByName('_name')[0].value);
@@ -116,5 +115,46 @@ function reloadWindows() {
         location.reload();
     }, 2000);
 }
+
+function ValidateForm() {
+    //typeUserSelecteUpdate;
+    let appointmentProcess = document.getElementsByName("_appointmentProcess")[0].value;
+    let medicalNotes = document.getElementsByName("_medicalNotes")[0].value;
+    let prescribedMedical = document.getElementsByName("_prescribedMedical")[0].value;
+
+    if (medicalNotes == "" || medicalNotes == null || medicalNotes.trim() == "") {
+        document.getElementById("errorMedicalNotes").innerHTML = "* Indicar si se le receto o se le indico algun estudio";
+        document.getElementsByName("_medicalNotes")[0].className = "form-control erro-input";
+        document.getElementsByName("_medicalNotes")[0].focus();
+        return;
+    }
+    document.getElementsByName("_medicalNotes")[0].className = "form-control sucess-input";
+    document.getElementById("errorMedicalNotes").innerHTML = "";
+
+    if (prescribedMedical == "" || prescribedMedical == null || prescribedMedical.trim() == "") {
+        document.getElementById("errorPrescribedMedical").innerHTML = "* Indicar si se le receto o se le indico algun estudio";
+        document.getElementsByName("_prescribedMedical")[0].className = "form-control erro-input";
+        document.getElementsByName("_prescribedMedical")[0].focus();
+        return;
+    }
+    document.getElementsByName("_prescribedMedical")[0].className = "form-control sucess-input";
+    document.getElementById("errorPrescribedMedical").innerHTML = "";
+
+    //validamos que este seleccionado el tipo de usuario
+    if (appointmentProcess != 0) {
+        document.getElementById("errorProcess").innerHTML = "";
+        document.getElementById("_appointmentProcess").className = "custom-select sucess-input";
+        document.getElementById("processButton").className = "btn btn-outline-success sucess-input";
+
+    } else {
+        document.getElementById("errorProcess").innerHTML = "* Selecciona el proceso de la cita";
+        document.getElementById("_appointmentProcess").className = "custom-select erro-input";
+        document.getElementById("processButton").className = "btn btn-danger erro-input";
+        return
+    }
+  
+    UpdatePatientInformation();
+}
+
 
 

@@ -174,10 +174,6 @@ function InsertAppointmentNew() {
 //para rellenar el calendario con la misma 
 function GetDataToFillCalendar() {
    
-
-    /*TODO:
-      //esta funciona se trabajara luego
-     */
     fetch('Appointment/GetDataCalendar', {
         method: 'GET'
     }).then(response => response.json())
@@ -215,6 +211,118 @@ function GetDataToFillCalendar() {
 
 }
 
+//funciones que se invocaran al cargar la paginas
 window.onload = function () {
     GetDataToFillCalendar();
+    getDoctor();
+    getCustomer();
 };
+
+//funcion que trae los doctores a la vista para agendarle la cita
+function getDoctor() {
+
+    fetch('Doctor/Doctor', {
+        method: 'GET',
+    }).then(response => response.json())
+        .then(data => {
+            console.log(data)
+            doctorSelected.innerHTML = `
+                        <div class="input-group-prepend">
+                            <button id="buttonErro" class="btn btn-outline-info" type="button">Seleccione el doctor</button>
+                        </div>
+                        <select class="custom-select" id="doctorSelect" name="_doctor">
+                         
+                        <option value="0" selected>Seleccione Aqui...</option>
+                           ${data.map((item, i) => `
+                            <option value="${item["idDoctor"]}">${item.name}&nbsp &nbsp${item.lastName}</option>
+                          
+                            `.trim()).join('')
+                }
+                        </select>
+        `;
+        })
+
+}
+
+function getCustomer() {
+
+    fetch('Customer/Customer', {
+        method: 'GET',
+    }).then(response => response.json())
+        .then(data => {
+            console.log(data)
+            customerSelected.innerHTML = `
+                        <div class="input-group-prepend">
+                            <button id="buttonError" class="btn btn-outline-info" type="button">Seleccione el paciente</button>
+                        </div>
+                        <select class="custom-select" id="customerSelect" name="_customer">
+                         
+                        <option value="0" selected>Seleccione Aqui...</option>
+                           ${data.map((item, i) => `
+                            <option value="${item["idCustomer"]}">${item.name}&nbsp &nbsp${item.lastName}</option>
+                          
+                            `.trim()).join('')
+                }
+                        </select>
+        `;
+        })
+
+}
+
+function FormValidate() {
+
+    let doctor = document.getElementById("doctorSelect").value;
+    let customer = document.getElementById("customerSelect").value;
+    let description = document.getElementsByName("_description")[0].value;
+    let timeAppointment = document.getElementsByName("_timeAppointment")[0].value;
+    let dateAppointment = document.getElementsByName("_dateAppointment")[0].value;
+
+    if (doctor != 0) {
+        document.getElementById("errorDoctor").innerHTML = "";
+        document.getElementById("doctorSelect").className = "custom-select sucess-input";
+        document.getElementById("buttonErro").className = "btn btn-outline-success sucess-input";
+    } else {
+        document.getElementById("errorDoctor").innerHTML = "* Selecciona el doctor";
+        document.getElementById("doctorSelect").className = "custom-select erro-input";
+        document.getElementById("buttonErro").className = "btn btn-danger erro-input";
+        return
+    }
+    if (customer != 0) {
+        document.getElementById("errorCustomer").innerHTML = "";
+        document.getElementById("customerSelect").className = "custom-select sucess-input";
+        document.getElementById("buttonError").className = "btn btn-outline-success sucess-input";
+    } else {
+        document.getElementById("errorCustomer").innerHTML = "* Selecciona el paciente";
+        document.getElementById("customerSelect").className = "custom-select erro-input";
+        document.getElementById("buttonError").className = "btn btn-danger erro-input";
+        return
+    }
+    if (description == "" || description == null || description.trim() == "") {
+        document.getElementById("errorDescription").innerHTML = "* Indicar algunas notas";
+        document.getElementsByName("_description")[0].className = "form-control erro-input";
+        document.getElementsByName("_description")[0].focus();
+        return;
+    }
+    document.getElementsByName("_description")[0].className = "form-control sucess-input";
+    document.getElementById("errorDescription").innerHTML = "";
+
+    if (timeAppointment == "" || timeAppointment == null || timeAppointment.trim() == "") {
+        document.getElementById("errorTimeAppointment").innerHTML = "* Indicar la hora de la cita";
+        document.getElementsByName("_timeAppointment")[0].className = "form-control erro-input";
+        document.getElementsByName("_timeAppointment")[0].focus();
+        return;
+    }
+    document.getElementById("erroTime").className = "form-control sucess-input";
+    document.getElementById("errorTimeAppointment").innerHTML = "";
+
+    let fechaInput = new Date(dateAppointment);
+    let dateNow = Date.now();
+
+    if ((fechaInput <= dateNow)){
+        document.getElementById("errorDates").innerHTML = "* No puedes crear una cita con fecha menor a la actual";
+        return; 
+    }
+    document.getElementById("errorDates").innerHTML = "";
+   
+   InsertAppointmentNew();
+}
